@@ -20,7 +20,9 @@ const Text = styled.span`
   color: #fff;
 `;
 
-// # 2.2
+// # 2.1
+// ** Styled Components 설치 방법
+// ---> npm i styled-components
 // React에 css를 적용하는 기본방법은 세가지이다.
 // 1. Css 파일을 만들고 import하기
 // 2. Style prop에 자바스크립트 객체로 스타일 코드를 넣어주기
