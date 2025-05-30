@@ -13,7 +13,7 @@ const motion = keyframes`
   50% {
     transform: rotate(360deg);
     border-radius: 100px;
-  }
+  } 
   100%{
     transform: rotate(0);
     border-radius: 0;
