@@ -277,4 +277,44 @@
 // matchPath()
 // matchPath는 URL 경로 이름에 대해 경로 패턴을 일치시키고 일치에 대한 정보를 반환합니다.
 
+// #5.9
+// react 버전이 18이면 타입스크립트에서 react query를 못 불러옵니다
+// npm i @tanstack/react-query 를 입력해서 모듈을 설치하면 react query불러오기가 가능해집니다
+// 그리고 @tanstack/react-query에서 useQuery를 사용할때 query key의 값은 대괄호로 묶어줘야합니다
+// const { isLoading, data } = useQuery(["allCoins"], fetchCoins);
+// queryKey: [coinId] --> 실행되기 위해서는 키 값은 고유 값으로만 들어가야 한다.
+// 고유값으로 변경 --> queryKey: ["info", coinId] / queryKey: ["tickers", coinId] 각 2개 고유값
+
+// useQuery 반환되는 값 -->
+// - data	가져온 데이터(예: JSON)
+// - isLoading	데이터를 불러오는 중이면 true
+// - error	에러가 발생하면 에러 객체 반환
+// - isError	에러 발생 여부 (true/false)
+// - refetch()	수동으로 데이터를 다시 불러올 수 있음
+
+// #5.10
+// React Query Devtools
+// React Query의 모든 내부 작동을 시각화하는 데 도움이 되며 문제가 발생하면 디버깅 시간을 절약할 수 있습니다!
+// 기본적으로 React Query Devtools는 process.env.NODE_ENV === 'development'인 경우에만 번들에 포함되므로 프로덕션 빌드 중에 제외하는 것에 대해 걱정할 필요가 없습니다.
+// ```
+// import { ReactQueryDevtools } from 'react-query/devtools';
+// < ReactQueryDevtools initialIsOpen={false} / >
+// ```
+// https://react-query.tanstack.com/devtools#_top
+
+// Query Keys
+// 핵심적으로 React Query는 쿼리 키를 기반으로 쿼리 캐싱을 관리합니다. 쿼리 키는 문자열처럼 단순할 수도 있고 많은 문자열과 중첩 개체의 배열처럼 복잡할 수도 있습니다.
+// ex) const result = useQuery(['todos', todoId], () => fetchTodoById(todoId));
+// https://react-query.tanstack.com/guides/query-keys#_top
+
+// const {isLoading: infoLoading} --> isLoading이라는 이름을 infoLoading로 변경하여 사용
+
+// #5.11
+// react query의 useQuery는 fetch의 완료 여부를 제공하는 값과 data를 넣은 객체를 한번에 반환한다.
+// 게다가 캐싱 기능까지 제공하여 화면전환시 불필요한 re-fetch과정도 생략한다..
+
+// useQuery의 1번 인자에는 고유한 key를 넣는다.
+// 일반적으로 fetcher함수의 param에 대입될 값을 쓰고, 해당 값을 이용하는 fetcher가 여러개라면
+// key를 배열형태로 넣어서 기능과 id를 함꼐 넣어준다.
+
 // ----------------------------- //#5 Crypto Tracker -----------------------------
