@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
-import { Helmet } from "react-helmet";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -25,7 +22,7 @@ const CoinsList = styled.ul``;
 const Coin = styled.li`
   margin-bottom: 10px;
   background: white;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   a {
     display: flex;
@@ -67,11 +64,7 @@ interface ICoin {
   type: string;
 }
 
-interface ICoinsProps {}
-
 function Coins() {
-  const setDarkAtom = useSetRecoilState(isDarkAtom);
-  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<ICoin[]>({
     queryKey: ["allCoins"],
     queryFn: fetchCoins,
@@ -88,12 +81,8 @@ function Coins() {
   // }, []);
   return (
     <Container>
-      <Helmet>
-        <title>코인</title>
-      </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDarkAtom}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

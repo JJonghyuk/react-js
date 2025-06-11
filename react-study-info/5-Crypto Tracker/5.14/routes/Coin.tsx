@@ -6,13 +6,12 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Price from "./Price";
 import Chart from "./Chart";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
-import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -155,9 +154,6 @@ interface PriceInfoData {
   };
 }
 
-interface ICoinProps {
-}
-
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
@@ -171,17 +167,10 @@ function Coin() {
     useQuery<PriceInfoData>({
       queryKey: ["tickers", coinId],
       queryFn: () => fetchCoinTickers(coinId),
-      // *실시간 동기화
-      // refetchInterval: 5000,
     });
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-        </title>
-      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -201,8 +190,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Price:</span>
-              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>Open Source:</span>
+              <span>{infoData?.open_source ? "Yes" : "No"}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>

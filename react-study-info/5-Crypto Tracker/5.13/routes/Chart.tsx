@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
-import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atoms";
 
 interface IHistorical {
   time_open: number;
@@ -20,15 +18,12 @@ interface ChartProps {
 }
 
 function Chart({ coinId }: ChartProps) {
-  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>({
     queryKey: ["ohlcv", coinId],
     queryFn: () => fetchCoinHistory(coinId),
-    // * 실시간 동기화
-    refetchInterval: 10000,
   });
   return (
-    <div>
+    <div>Add commentMore actions
       {isLoading ? (
         "Loading chart..."
       ) : (
@@ -42,53 +37,28 @@ function Chart({ coinId }: ChartProps) {
           ]}
           options={{
             theme: {
-              mode: isDark ? "dark" : "light",
+              mode: "dark",
             },
             chart: {
-              height: 500,
+              height: 300,
               width: 500,
               toolbar: {
                 show: false,
               },
               background: "transparent",
             },
-            grid: {
-              show: false,
-            },
+            grid: { show: false },
             stroke: {
               curve: "smooth",
-              width: 3,
+              width: 4,
             },
             yaxis: {
               show: false,
             },
             xaxis: {
-              labels: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-              },
-              type: "datetime",
-              categories: data?.map((price) =>
-                new Date(price.time_close * 1000).toUTCString(),
-              ),
-            },
-            fill: {
-              type: "gradient",
-              gradient: {
-                gradientToColors: ["#0be881"],
-                stops: [0, 100],
-              },
-              colors: ["#0fbcf9"],
-            },
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(3)}`,
-              },
+              axisBorder: { show: false },
+              axisTicks: { show: false },
+              labels: { show: false },
             },
           }}
         />

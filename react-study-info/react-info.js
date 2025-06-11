@@ -317,4 +317,116 @@
 // 일반적으로 fetcher함수의 param에 대입될 값을 쓰고, 해당 값을 이용하는 fetcher가 여러개라면
 // key를 배열형태로 넣어서 기능과 id를 함꼐 넣어준다.
 
+// #5.13
+// npm install--save react - apexcharts apexcharts
+
+// APEX CHARTS
+// 현대적이고 인터랙티브한 오픈 소스 차트
+// npm install --save react-apexcharts apexcharts
+
+// - https://apexcharts.com
+
+// React APEX CHARTS Doc
+// ApexCharts를 사용하여 React.js에서 차트 만들기
+// React-ApexCharts는 멋진 React Charts를 만들기 위해 react.js 애플리케이션에 통합할 준비가 된 ApexCharts용 래퍼 구성 요소입니다.
+// - https://apexcharts.com/docs/react-charts
+
+// React-ApexCharts 컴포넌트 Props
+
+// type
+// 차트 유형 (String) (기본값 ‘line’)
+
+// series
+// 차트에 표시하려는 데이터 (Array) (기본값 undefined)
+
+// width, height
+// 차트의 너비 (String || Number) ( 기본값 ‘100%’)
+// 차트의 높이 (String || Number) (기본값 auto)
+
+// options
+// 차트의 구성 옵션 (Object) ( 기본값 {})
+
+// Closing Price: "종가"는 일반적으로 일반 거래 세션 동안 주식이 거래되는 마지막 가격을 나타냅니다.
+
+// #5.14
+// ??	값이 null 또는 undefined일 때만 우측 대체값 사용
+// - a ?? b
+// a가 null 또는 undefined일 경우, 결과는 b
+// a가 그 외의 값(0, "", false 등)은 그대로 유지
+
+// new Date(price.time_close * 1000).toUTCString()
+// - price.time_close	초 단위 유닉스 시간
+// - * 1000	초 → 밀리초로 변환(자바스크립트 Date가 이해할 수 있게)
+// - .toUTCString()	UTC 기준 문자열로 변환
+
+// toFixed(n)	소수점 n자리까지 반올림하고 문자열 반환
+
+// #5.15
+// * 실시간 동기화 옵션 --> refetchInterval:0000;
+// react query의 useQuery의 3번째 parameter로 다양한 옵션을 줄 수있습니다.
+// refetchInterval은 입력받은 milesecond마다 다시 fetch를 해주는 옵션입니다.
+
+// react helmet 은 내부에서 render되는것을 전부(title,css,favicon 등등) head로 보내는
+// component를 제공하는 라이브러리입니다.
+
+// #5.16
+// *** 뒤로가기 버튼 만들기, 차트 바꾸기, 프라이스 넣기 ***
+
 // ----------------------------- //#5 Crypto Tracker -----------------------------
+
+// ----------------------------- #6 State Management -----------------------------
+
+// #6.0
+// Recoil
+// React를 위한 상태관리 라이브러리
+// https://recoiljs.org/ko
+
+// #6.1
+// void --> "아무것도 없음"을 뜻함.
+// - "함수가 아무 값도 반환하지 않을 때" 사용 되는 리턴 타입
+
+// 단순 react js로 state management를 할때 생기는 불편함:
+// App에서 컴포넌트로 내려가는 계층구조로 인해서 state와 state manipulation을 일일이 각 component들에 전달해줘야함. (App-Router-Coins // App-Router-Coin-Chart)
+
+// Recoil은 state를 따로 buble에 담아서 각 컴포넌트들이 필요할때 buble에 접속해서 사용할 수 있게 함. (App -> (isDark)
+
+// - global state는 app이 무언가를 인지해야 할 때 사용한다.
+// - state management를 사용하지 않는다면 매우 긴 props의 여정이 생길 수 있다. 따라서 어느곳에서나 접근할 수 있는 state를 만들면 편하다.
+// - recoil을 사용하여 state management를 배운다.
+// - recoil은 react에서 사용할 수 있는 state management library다.
+
+// #6.2
+// # State management 3가지 라이브러리
+// - Recoil ---> npm install recoil
+// - Redux
+// - Context API
+
+// # 차이점
+// https://velog.io/@danmin20/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%AD%98-%EC%93%B8%EA%B9%8C
+
+// #6.3
+// - useRecoilValue(state)
+// Recoil state값을 반환합니다.
+// 이 hook은 암묵적으로 주어진 상태에 컴포넌트를 구독합니다.
+// 이 hook는 읽기 전용 상태와 쓰기 가능 상태에서 모두 동작하므로 컴포넌트가 상태를 읽을 수만 있게 하고 싶을 때에 추천하는 hook입니다. 이 hook을 React 컴포넌트에서 사용하면 상태가 업데이트 될 때 리렌더링을 하도록 컴포넌트를 구독합니다.
+// ex) const names = useRecoilValue(namesState);
+// https://recoiljs.org/ko/docs/api-reference/core/useRecoilValue/
+
+// - useSetRecoilState(state)
+// Recoil state의 값을 업데이트하기 위한 setter 함수를 반환합니다.
+// 상태를 변경하기 위해 비동기로 사용될 수 있는 setter 함수를 리턴합니다.
+// setter는 새로운 값이나 이전 값을 인수로 받는 updater 함수를 넘겨줍니다.
+// ex) const setNamesState = useSetRecoilState(namesState);
+// https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/
+
+// #6.4
+
+// #6.5
+
+// #6.6
+
+// #6.7
+
+// #6.8
+
+// ----------------------------- //#6 State Management -----------------------------

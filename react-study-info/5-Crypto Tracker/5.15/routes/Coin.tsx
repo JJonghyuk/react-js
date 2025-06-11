@@ -155,9 +155,6 @@ interface PriceInfoData {
   };
 }
 
-interface ICoinProps {
-}
-
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
@@ -167,6 +164,8 @@ function Coin() {
     queryKey: ["info", coinId],
     queryFn: () => fetchCoinInfo(coinId),
   });
+  console.log(state?.name);
+  console.log(infoData?.name);
   const { isLoading: tickersLoading, data: tickersData } =
     useQuery<PriceInfoData>({
       queryKey: ["tickers", coinId],
@@ -202,7 +201,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
