@@ -131,8 +131,12 @@
 // event.currentTarget은 click 이벤트가 등록되어 있는 ul를 가리킨다.
 
 // 3가지 방식으로 구분 가능
-// const { currentTarget: { value } } = event;
+// ** const { currentTarget: { value, name } } = event;
+// --> 구조 분해 할당으로 console.log(value) / console.log(name) 이렇게 여러개를 꺼낼 수 있음
+
 // const { currentTarget } = event;
+// --> console.log(currentTarget.value) 라고 value를 뒤에 넣어줘야 그 값을 꺼낼 수 있다
+
 // const value = event.currentTarget.value
 
 // # 3.6
@@ -419,14 +423,109 @@
 // ex) const setNamesState = useSetRecoilState(namesState);
 // https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/
 
-// #6.4
-
-// #6.5
-
 // #6.6
+// React Hook Form
+// - 사용하기 쉬운 유효성 검사를 통해 성능이 뛰어나고 유연하며 확장 가능한 form입니다.
+// - https://react-hook-form.com
+// 설치: npm install react-hook-form
+
+// 🔶 register: name, onBlur, onChange, onClick, ref를 return하는 함수
+// -< input {...register("category") ... > 하면 register 함수가 반환하는 객체를 input의 props로 사용할 수 있음.
+// -< input onSubmit={} onClick={} onBlur={} > 같은 느낌..?
+// 🔶 watch: form의 입력값들의 변화를 관찰할 수 있게 해주는 함수
+
+// -React Hook Form은 리액트에서 form으로 작업하기에 가장 좋은 방법이다. 만약 input이 하나 밖에 없다면 그리 필요하지 않을 수 잇다.
+// -Hook form을 사용하지 않은면 많은 state를 작성해야 한다. 검증차원에서도 유리하다.
+// -react hook form 을 사용하기 위해 useForm이라는 hook을 import 한다.
+// -useform의 register 함수를 사용하면 onchange 이벤트 핸들러가 필요 없다. 따라서 props도 필요없고 setstate도 필요없다.
+// -onBlur 이벤트는 화면의 바깥쪽(focus에서 벗어난 상태)을 말한다.
+// -iput에 register의 속성 그 자체를 복사 해준다.
+// -useForm의 watch 함수는 변화를 관찰할 수 있게 해준다.
 
 // #6.7
+// -handleSubmit 을 사용하여 onSubmit 대체. handleSubmit 이 호출하는 함수는 두 개다. 하나는 호출이 성공했을때, 하나는 호출이 실패했을 때.
+// -그냥 input에 required를 사용할 수 있지만, 그것은 변경이 가능하다. 따라서 html이 아닌 js에서 validation을 할 수 있다.
+// -formState props에서 에러 확인이 가능하다.
+// -에러에 message를 입력할 수 있다.
+// ex)
+// <input
+//   {...register("password1", {
+//     required: "Password is required",
+//     minLength: {
+//       value: 5,
+//       message: "Your password is too short.",
+//     },
+//   })}
+//  placeholder="Password1"/>
 
 // #6.8
+// 정규표현식
+// ^ --> 문장의 시작
+// + --> 하나 또는 하나이상
+
+// /^[A-Za-z0-9._%+-]+@naver.com$/
+// /^[A-Za-z0-9._%+-]+@naver.com/g
+
+// https://www.regexpal.com
+
+// React Hook Form (TypeScript)
+// React Hook Form은 TypeScript로 빌드되었으며, FormData 유형을 정의하여 form 값을 지원할 수 있습니다.
+
+// type FormData = {
+// firstName: string;
+// lastName: string;
+// };
+// ----> 필수값이 아닌경우 ? 를 붙여 준다 ex) firstName?:string
+
+// const { register, setValue, handleSubmit, formState: { errors } } = useForm< FormData >();
+
+// https://react-hook-form.com/get-started#TypeScript
+
+// defaultValues: Record< string, any > = {}
+// input에 대한 defaultValues는 사용자가 component와 상호 작용하기 전에 component가 처음 렌더링될 때 초기 값으로 사용됩니다.
+// ex)
+// useForm < IForm >
+// {
+//   defaultValues: {
+//     email: "@naver.com",
+//   },
+// };
+
+// 모든 input에 대한 defaultValues를 빈 문자열이나 null과 같은 정의되지 않은 값으로 설정하는 것이 좋습니다.
+// https://react-hook-form.com/api/useform#props
+
+// 라인 끝에 커서 포커싱하기 (VSCode단축키)
+// option(alt)+shift+i
+
+// #6.9
+// 🔶setError: 발생하는 문제에 따라 추가적으로 에러를 설정할 수 있게 도와줌
+// 사용방법(예시):
+// const {register, handleSubmit, formState:{errors},setError} = useForm< IForm >();
+// setError("register의 name", {message: . . . }, { shouldFocus: true } )
+// -shouldFocus: 내가 고른 input 항목에 강제로 focus(커서 갖다대기)를 할 수 있음
+
+// 🔶validate: 내가 원하는 규칙으로 유효성 검사하기
+// validate(현재값) => { !value.includes("nico") || "error message"}
+// input 값에 nico가 포함되면 에러메세지 리턴
+// ex)
+// validate: {
+//   noJJong: (value) =>
+//     value.includes("jjong") ? "no JJong allowed" : true,
+//   noJJongs: (value) =>
+//     value.includes("jjongs") ? "no JJongs allowed" : true,
+// }
+
+// -비밀번호가 일치하지 않은지 확인하는 방법
+// -setError은 특정한 에러를 발생시키게 해준다.
+// -shouldFocus는 에러가 난 곳으로 강제
+// -validation 값은 T/F값을 받는다. 객체형식으로 여러 개를 관리할 수 있다.
+
+// #6.10
+
+// #6.11
+
+// #6.12
+
+// #6.13
 
 // ----------------------------- //#6 State Management -----------------------------
