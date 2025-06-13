@@ -408,6 +408,11 @@
 // # 차이점
 // https://velog.io/@danmin20/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%AD%98-%EC%93%B8%EA%B9%8C
 
+// export const isDarkAtom = atom({
+//   key: "isDark",       // 각 atom을 식별하는 고유한 문자열입니다. Recoil은 이 키를 통해 내부적으로 상태를 추적합니다. 중복되면 에러가 납니다.
+//   default: false,      // atom의 초기값입니다. 어떤 타입이든 사용할 수 있습니다. (boolean, number, string, array, object, 등등)
+// });
+
 // #6.3
 // - useRecoilValue(state)
 // Recoil state값을 반환합니다.
@@ -521,11 +526,80 @@
 // -validation 값은 T/F값을 받는다. 객체형식으로 여러 개를 관리할 수 있다.
 
 // #6.10
+// setValue: (name: string, value: unknown, config?: Object) => void
+// 필드 값을 업데이트
+// 이 함수을 사용하면 등록된 필드의 값을 동적으로 설정하고 form state를 확인하고 업데이트하는 옵션을 가질 수 있습니다. 동시에 불필요한 rerender를 피하려고 합니다.
+
+// setValue('firstname', 'hello');
+// onClick={() => setValue("firstName", "Bill")}
+
+// https://react-hook-form.com/api/useform/setvalue
+
+// reset: (values?: Record, options?: Record) => void
+// form state와 value 재설정
+// 전체 form state 또는 form state의 일부를 재설정합니다.
+
+// reset() // form 전체 리셋
+// reset({ email: "" }); // form에서 특정 필드만 리셋
+
+// https://react-hook-form.com/api/useform/reset
+
+// ex)
+// const { register, handleSubmit, reset } = useForm<IForm>();
+// const onSubmit = (data: IForm) => {
+//   console.log("add to do", data.toDo);
+//   reset();
+// };
 
 // #6.11
+// | 기호는 "하나만"이라는 뜻이 아니라, "이 중 하나"라는 뜻입니다.
+// ex)
+// category: "TO_DO" | "DOING" | "DONE";
+
+// ** useRecoilState(state)
+// 첫 요소가 상태의 값이며, 두번째 요소가 호출되었을 때 주어진 값을 업데이트하는 setter 함수인 튜플을 리턴합니다.
+// 이 hook은 암묵적으로 주어진 상태에 컴포넌트를 구독합니다.
+
+// const [toDos, setToDos] = useRecoilState(toDoState);
+// --> useState랑 같다고 보면된다. (setToDos를 설정하면 toDos안의 내용이 수정됨)
+// ex)
+// const [toDos, setToDos] = useRecoilState(toDoState);
+// setToDos((oldToDos) => [
+//   { text: toDo, id: Date.now(), category: "TO_DO" },
+//   ...oldToDos,
+// ]);
+
+// https://recoiljs.org/ko/docs/api-reference/core/useRecoilState/
+
+// useRecoilValue: state값을 리턴
+// useSetRecoilState: setter 함수를 리턴
+// useRecoilState: state, setter 함수를 모두 리턴
 
 // #6.12
+// Todo list / Todo 입력 폼 / Todo atom 파일을 각각 분리한다.
+// 1. toDo atom에는 atom을 위한 타입과 atom에대한 정의만 입력한다.
+// 2. todo 입력폼에는 폼의 submit 을 통한 결과를 처리하는 역할만한다.
+// 3. todo는 각각의 todo에대한 정의를 넣는다.
+// 4. todoList는3 번의 todo를 그려주는 역할을한다.
+
+// 여기서 파일별 책임이 어떻게 분리되는지 주의해서 봐야한다.
+// 1. atom 선언파일
+// 2. todoForm 컨트롤 컴포넌트
+// 3. 각각의 todo에대한 컴포넌트
+// 4. 단지 그려주는 todolist 컴포넌트
 
 // #6.13
+// 단축평가란?
+// || (논리합), && (논리곱) 연산자는 왼쪽부터 오른쪽으로 평가를 진행하는데,
+// 중간에 평가결과가 나오면 오른쪽 끝까지 가지 않고 평가결과를 반환해버린다.
+// 이를 단축평가라고 하며, 피연산자의 타입을 변환하지 않고 그대로 반환한다.
+
+// 예를 들어
+// "apple" || "banana"; // 결과는 "apple"
+// "apple" && "banana"; // 결과는 "banana"
+
+// || (논리합) 연산자의 단축평가 : 둘 중 하나만 true면 true로 평가되므로 왼쪽 피연산자가 true이면 바로 true를 반환한다.
+
+// && (논리곱) 연산자의 단축평가 : 둘 다 true여야만 true 이므로 왼쪽 피연산자가 false면 바로 false로 평가된다.
 
 // ----------------------------- //#6 State Management -----------------------------
