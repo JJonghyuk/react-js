@@ -593,6 +593,7 @@
 // || (논리합), && (논리곱) 연산자는 왼쪽부터 오른쪽으로 평가를 진행하는데,
 // 중간에 평가결과가 나오면 오른쪽 끝까지 가지 않고 평가결과를 반환해버린다.
 // 이를 단축평가라고 하며, 피연산자의 타입을 변환하지 않고 그대로 반환한다.
+// {조건 && 표현식}
 
 // 예를 들어
 // "apple" || "banana"; // 결과는 "apple"
@@ -601,5 +602,78 @@
 // || (논리합) 연산자의 단축평가 : 둘 중 하나만 true면 true로 평가되므로 왼쪽 피연산자가 true이면 바로 true를 반환한다.
 
 // && (논리곱) 연산자의 단축평가 : 둘 다 true여야만 true 이므로 왼쪽 피연산자가 false면 바로 false로 평가된다.
+
+// #6.14
+// Array.prototype.findIndex()
+// findIndex() 메서드는 주어진 판별 함수를 만족하는 배열의 첫 번째 요소에 대한 인덱스를 반환합니다. 만족하는 요소가 없으면 -1을 반환합니다.
+// 인덱스 대신 값을 반환하는 find() 메서드도 참고하세요.
+
+// const array1 = [5, 12, 8, 130, 44];
+
+// const isLargeNumber = (element) => element > 13;
+
+// console.log(array1.findIndex(isLargeNumber));
+// expected output: 3
+
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+
+// #6.15
+// as any 라고 붙이면 타입스크립트에게 체크하지 말라고 하는것
+// ex) const newToDo = { text, id, category: name as any };
+
+// #6.16
+// Array.prototype.slice()
+// slice() 메서드는 어떤 배열의 begin부터 end까지(end 미포함)에 대한 얕은 복사본을 새로운 배열 객체로 반환합니다. 원본 배열은 바뀌지 않습니다.
+// end가 생략되면 slice()는 배열의 끝까지(arr.length) 추출합니다.
+
+// const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+
+// console.log(animals.slice(2)); // expected output: Array ["camel", "duck", "elephant"]
+// console.log(animals.slice(2, 4)); // expected output: Array ["camel", "duck"]
+
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+
+// name as any대신
+// name as "TO_DO" | "DOING" | "DONE" 또는 name as IToDo['category']로도 가능합니다.
+
+// #6.17
+// Selectors
+
+// Selector는 파생된 state(derived state)의 일부를 나타낸다.
+// 즉, 기존 state를 가져와서, 기존 state를 이용해 새로운 state를 만들어서 반환할 수 있다. 기존 state를 이용만할 뿐 변형시키지 않는다. derived state는 다른 데이터에 의존하는 동적인 데이터를 만들 수 있기 때문에 강력한 개념이다.
+// ```
+// const filteredTodoListState = selector({
+// key: 'filteredTodoListState',
+// get: ({get}) => {
+// const filter = get(todoListFilterState);
+// const list = get(todoListState);
+
+// switch (filter) {
+// case 'Show Completed':
+// return list.filter((item) => item.isComplete);
+// case 'Show Uncompleted':
+// return list.filter((item) => !item.isComplete);
+// default:
+// return list;
+// }
+// },
+// });
+// ```
+// filteredTodoListState는 내부적으로 2개의 의존성 todoListFilterState와 todoListState을 추적한다. 그래서 둘 중 하나라도 변하면 filteredTodoListState는 재 실행된다.
+
+// https://recoiljs.org/ko/docs/basic-tutorial/selectors/
+// https://recoiljs.org/ko/docs/api-reference/core/selector/
+
+// -selector를 이용하여 todo들을 분리
+// -selector은 atom의 output을 변형시킴. selector은 state를 이용하여 뭔가를 return 한다.
+// -selector는 get function이 있는데 인자로 객체를 받는다.
+// -selector의 요점은 atom을 가져다가 output을 변형할 수 있다는 것.
+// -state를 변형시키는 것이 아니라 state를 이용하여 output을 변형시키는 것.
+
+// #6.17
+
+// #6.18
+
+// #6.119
 
 // ----------------------------- //#6 State Management -----------------------------
