@@ -621,6 +621,9 @@
 // as any 라고 붙이면 타입스크립트에게 체크하지 말라고 하는것
 // ex) const newToDo = { text, id, category: name as any };
 
+// as any대신
+// as "TO_DO" | "DOING" | "DONE" 또는 name as IToDo['category']로도 가능합니다.
+
 // #6.16
 // Array.prototype.slice()
 // slice() 메서드는 어떤 배열의 begin부터 end까지(end 미포함)에 대한 얕은 복사본을 새로운 배열 객체로 반환합니다. 원본 배열은 바뀌지 않습니다.
@@ -632,9 +635,6 @@
 // console.log(animals.slice(2, 4)); // expected output: Array ["camel", "duck"]
 
 // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
-
-// name as any대신
-// name as "TO_DO" | "DOING" | "DONE" 또는 name as IToDo['category']로도 가능합니다.
 
 // #6.17
 // Selectors
@@ -673,6 +673,38 @@
 // #6.17
 
 // #6.18
+// Enums(이늄)
+
+// 열거형은 TypeScript가 제공하는 기능 중 하나입니다.
+// enum은 열거형으로 이름이 있는 상수들의 집합을 정의할 수 있습니다.
+// 열거형을 사용하면 의도를 문서화 하거나 구분되는 사례 집합을 더 쉽게 만들수 있습니다. TypeScript는 숫자와 문자열-기반 열거형을 제공합니다.
+
+// 숫자 열거형 (Numeric enums)
+// enum Direction {
+// Up,  >> 0 으로 시작
+// Down,  >> 1 으로 시작
+// Left,
+// Right,
+// }
+
+// 문자열 열거형 (String enums)
+// enum Direction {
+// Up = "UP",
+// Down = "DOWN",
+// Left = "LEFT",
+// Right = "RIGHT",
+// }
+// 등등..
+
+// https://www.typescriptlang.org/ko/docs/handbook/enums.html
+
+// **enum을 일반적인상태로 컴파일되면 코드스페이스를 오염시킵니다. 꼭 const enum형태로 사용합시다
+// ex)
+// export const enum Categories {
+//   "TO_DO" = "TO_DO",
+//   "DOING" = "DOING",
+//   "DONE" = "DONE",
+// }
 
 // #6.119
 
