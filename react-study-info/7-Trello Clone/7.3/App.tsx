@@ -19,6 +19,17 @@ function App() {
                   </li>
                 )}
               </Draggable>
+              <Draggable draggableId="second" index={1}>
+                {(dropMagic02) => (
+                  <li
+                    ref={dropMagic02.innerRef}
+                    {...dropMagic02.draggableProps}
+                  >
+                    <span {...dropMagic02.dragHandleProps}>✋</span>
+                    Two
+                  </li>
+                )}
+              </Draggable>
             </ul>
           )}
         </Droppable>

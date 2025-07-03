@@ -706,6 +706,111 @@
 //   "DONE" = "DONE",
 // }
 
-// #6.119
-
 // ----------------------------- //#6 State Management -----------------------------
+
+// ----------------------------- #7 Trello Clone -----------------------------
+
+// #7.0
+// selector(options)
+// 이 속성이 설정되면 selector는 쓰기 가능한 상태를 반환한다. 첫번째 매개변수로 콜백 객체와 새로 입력 값이 전달된다. 사용자가 selector를 재설정할 경우 새로 입력 값은 T 타입의 값 또는 DefaultValue 타입의 객체일 수 있다.
+// https://recoiljs.org/ko/docs/api-reference/core/selector
+
+// 쓰기 가능한 Selector
+// ```
+// const proxySelector = selector({
+// key: 'ProxySelector',
+// get: ({get}) => ({...get(myAtom), extraField: 'hi'}),
+// set: ({set}, newValue) => set(myAtom, newValue),
+// });
+// ```
+// https://recoiljs.org/ko/docs/api-reference/core/selector#%EC%93%B0%EA%B8%B0-%EA%B0%80%EB%8A%A5%ED%95%9C-selector
+
+// -->  + 해줄 경우 number 로 보여짐
+// const onMinutesChange = (event: React.FormEvent<HTMLInputElement>){
+//  setMinutes(+event.currentTarget.value)-- > + 해줄 경우 number 로 보여짐
+//   ==> +"1" --> 1
+//  }
+
+// #7.1
+// Selector
+
+// set? - 이 속성이 설정되면 selector는 쓰기 가능한 상태를 반환한다. 첫번째 매개변수로 콜백 객체와 새로 입력 값이 전달된다. 사용자가 selector를 재설정할 경우 새로 입력 값은 T 타입의 값 또는 DefaultValue 타입의 객체일 수 있다. 콜백에는 다음이 포함된다.
+
+// get 매개변수
+// 다른 atom이나 selector로부터 값을 찾는데 사용되는 함수. 이 함수는 selector를 주어진 atom이나 selector를 구독하지 않는다.
+
+// set 매개변수
+// 업스트림 Recoil 상태의 값을 설정할 때 사용되는 함수. 첫 번째 매개변수는 Recoil state, 두 번째 매개변수는 새로운 값(newValue)이다. 새로운 값은 업데이트 함수나 재설정 액션을 전파하는 DefalutValue 객체일 수 있다.
+// ```
+// const proxySelector = selector({
+// key: 'ProxySelector',
+// get: ({get}) => ({...get(myAtom), extraField: 'hi'}),
+// set: ({set}, newValue) => set(myAtom, newValue),
+// });
+// ```
+// https://recoiljs.org/ko/docs/api-reference/core/selector/
+
+// export const hourSelector = selector<number>({
+//   key: "hours",
+//   get: ({ get }) => {
+//     const minutesInputValue = get(minuteState) --> 값 가져오기
+//     return minutesInputValue / 60;
+//   },
+//   set: ({ set }, hoursValue) => {
+//     const minutesHoursInput = Number(hoursValue) * 60;
+//     set(minuteState, minutesHoursInput) --> 값 변경하기 (변경하는 인자, 변경해야 할 값)
+//   },
+// });
+
+// #7.2
+// ** react-beautiful-dnd
+// React로 list를 만들기 위한 아름답고 접근 가능한 드래그 앤 드롭
+// npm i react-beautiful-dnd
+// npm i --save-dev @types/react-beautiful-dnd
+
+// https://www.npmjs.com/package/react-beautiful-dnd
+// https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/about/installation.md
+
+// react-beautiful-dnd 테스트해 보기
+// https://react-beautiful-dnd.netlify.app/iframe.html?id=board--simple
+
+// react-beautiful-dnd 예시 코드
+// https://codesandbox.io/s/k260nyxq9v
+
+// DragDropContext
+// https://github.com/LeeHyungGeun/react-beautiful-dnd-kr
+
+// #7.3
+// Using innerRef
+// (Draggable과 Droppable컴포넌트의 내부 props정의)
+// < Draggable /> 및 < Droppable /> 컴포넌트 모두 HTMLElement를 제공해야 합니다. 이것은 DraggableProvided 및 DroppableProvided 객체의 innerRef 속성을 사용하여 수행됩니다.
+// https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/guides/using-inner-ref.md#using-innerref
+
+// dragHandleProps
+// 특정 영역을 통해서만 드래그를 가능하도록 하고 싶을 때 사용한다.
+// ex) {...provided.dragHandleProps}
+
+// DragDropContext
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/drag-drop-context.md
+
+// Droppable
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/droppable.md
+
+// Draggable
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/draggable.md
+
+// #7.4
+
+// #7.5
+
+// #7.6
+
+// #7.7
+
+// #7.8
+
+// #7.9
+
+// #7.10
+
+// ----------------------------- //#7 Trello Clone -----------------------------
