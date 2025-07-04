@@ -800,10 +800,97 @@
 // https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/draggable.md
 
 // #7.4
+// provided.placeholder (?ReactElement)
+// Draggable 엘리먼트를 드래그하는 동안 position: fixed(영역을 고정시킴)를 적용합니다.
+// Draggable을 드래그할 때 Droppable 리스트가 작아지는 것을 방지하기 위해 필요합니다.
+// Draggable 노드의 형제로 렌더링하는 것이 좋습니다.
+
+// ex)
+//   <Droppable droppableId="one">
+//     {(dropMagic) => (
+//       <Board ref={dropMagic.innerRef} {...dropMagic.droppableProps}>
+//         {toDos.map((toDo, index) => (
+//           <Draggable draggableId={toDo} index={index}>
+//             {(dropMagic02) => (
+//               <Card
+//                 ref={dropMagic02.innerRef}
+//                 {...dropMagic02.draggableProps}
+//                 {...dropMagic02.dragHandleProps}
+//               >
+//                 {toDo}
+//               </Card>
+//             )}
+//           </Draggable>
+//         ))}
+//         {dropMagic.placeholder} --> 드래그 할때 크기가 작아지는 현상을 없애줌
+//       </Board>
+//     )}
+//   </Droppable>
+
+// provided
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/droppable.md#1-provided-droppableprovided
 
 // #7.5
+// onDragEnd
+// result: DropResult
+// result.draggableId: 드래그 되었던 Draggable의 id.
+// result.type: 드래그 되었던 Draggable의 type.
+// result.source: Draggable 이 시작된 위치(location).
+// result.destination: Draggable이 끝난 위치(location). 만약에 Draggable이 시작한 위치와 같은 위치로 돌아오면 이 destination값은 null이 될것입니다.
+
+// ex)
+// const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+//   console.log(draggableId, destination, source);
+// - draggableId --> 내가 드래그를 선택한 id값
+// - destination --> 내가 드롭한 위치의 index 값
+// - source --> 내가 드래그를 선택한 위치의 index 값
+// };
+
+// Array.prototype.splice()
+// array.splice(start[, deleteCount[, item1[, item2[, ...]]]])
+// splice() 메서드는 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경합니다.
+// ```
+// const months = ['Jan', 'March', 'April', 'June'];
+// months.splice(1, 0, 'Feb');
+// console.log(months); // expected output: Array ["Jan", "Feb", "March", "April", "June"]
+// ```
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 
 // #7.6
+// mutation (뮤테이션)--> 변경되다 ex) --> splice()
+// non-mutation --> 변경되지 않다 --> slice()
+
+// ❓ splice() vs splice() 차이
+// - splice() 메서드 : 배열의 기존 요소 삭제/교체/추가 (원본 변화 o)
+// ex) splice(2, 1, "a") --> 배열의 index 3번째(2)를 삭제(1)
+// ex) splice(2, 0, "a") --> 배열의 index 3번째(2)를 삭제하지(0)않고 "a"를 추가한다
+// - slice() 메서드 : 원본 배열의 복사본을 만들어 새로운 배열 반환 (원본 변화 x)
+
+//  < Draggable /> list의 키
+//  < Draggable /> list를 렌더링하는 경우 각 < Draggable />에 key prop을 추가하는 것이 중요합니다.
+
+// 규칙
+// key는 list 내에서 고유해야 합니다.
+// key에 item의 index가 포함되어서는 안 됩니다. (map의 index사용 X)
+// 일반적으로 draggableId를 key로 사용하면 됩니다.
+// 주의! list에 key가 없으면 React가 경고하지만 index를 key로 사용하는 경우 경고하지 않습니다.
+// key를 올바르게 사용하지 않으면 정말 안 좋은 일이 생길 수 있습니다 💥
+// ```
+// return items.map((item, index) => (
+// < Draggable
+// // adding a key is important!
+// key={item.id}
+// draggableId={item.id}
+// index={index}
+// >
+// 나머지 코드..
+// ```
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/draggable.md#keys-for-a-list-of-draggable-
+
+// + Card를 드래그한 후 이동하지 않고, 다시 제자리에 놓았을 때, 콘솔창에 에러 발생하시는 분들은 destination?.index가 undefined일 때 return으로 함수를 종료시켜주시면 됩니다.
+// ```
+// if (destination?.index === undefined) return;
+// ```
 
 // #7.7
 

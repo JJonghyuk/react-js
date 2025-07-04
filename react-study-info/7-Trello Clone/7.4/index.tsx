@@ -75,8 +75,6 @@ a {
 }
 `;
 
-
-
 root.render(
   <RecoilRoot>
     <ThemeProvider theme={theme.darkTheme}>
