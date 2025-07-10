@@ -893,10 +893,72 @@
 // ```
 
 // #7.7
+// React.memo
+// ex) export default React.memo(DraggableCard);
+
+// React.memo는 고차 컴포넌트(Higher Order Component)입니다.
+// 컴포넌트가 동일한 props로 동일한 결과를 렌더링해낸다면, React.memo를 호출하고 결과를 메모이징(Memoizing)하도록 래핑하여 경우에 따라 성능 향상을 누릴 수 있습니다. 즉, React는 컴포넌트를 렌더링하지 않고 마지막으로 렌더링된 결과를 재사용합니다.
+
+// React.memo는 props 변화에만 영향을 줍니다. React.memo로 감싸진 함수 컴포넌트 구현에 useState, useReducer 또는 useContext 훅을 사용한다면, 여전히 state나 context가 변할 때 다시 렌더링됩니다.
+// 이 메서드는 오직 성능 최적화를 위하여 사용됩니다. 렌더링을 “방지”하기 위하여 사용하지 마세요. 버그를 만들 수 있습니다.
+
+// DraggableCard에게 동일한 index와 동일한 todo prop을 받으면 리랜더링을 하지 않도록 하기 위함이다.
+// ```
+// function MyComponent(props) {
+// /* props를 사용하여 렌더링 */
+// }
+
+// export default React.memo(MyComponent, areEqual);
+// ```
+// https://ko.reactjs.org/docs/react-api.html#reactmemo
 
 // #7.8
+// Object.keys(obj)
+
+// Object.keys() 메소드는 주어진 객체의 속성 이름들을 일반적인 반복문과 동일한 순서로 순회되는 열거할 수 있는 배열로 반환합니다.
+// ex) Object.keys(obj).map((item)=>obj[item])
+// ```
+// const object1 = {
+// a: 'somestring',
+// b: 42,
+// c: false
+// };
+// console.log(Object.keys(object1)); // Array ["a", "b", "c"]
+// ```
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+
+// {Object.keys(toDos).map((boardId) => (
+// Board boardId={boardId} key={boardId} toDos={toDos[boardId]}
+// ))}
+
+// 여기서 에러가 생긴 이유
+
+// 현재 toDos object에서 key들만 가져와 배열로 구성하고 그 배열에 map을 사용하여
+// 각 key들을 boardId라는 이름으로 toDos[boardId]
+// 이렇게 각 key들에 해당하는 값들에 접근하려고 하지만,
+
+// TypeScript 관점에서 Object.keys()로 가져온 각 key들(boardId)은 그냥 string일 뿐이다.
+// 하지만 toDos object의 key type은 "toDo" | "doing" | "done"로 제한되어 있다.
+// 그래서 string으로 toDos에 접근하려니까 에러가 생기는 것이다.
+
+// 이것을 해결하기 위해 인덱스 시그니처를 사용해
+// key들이 3개로만 제한되어 있는게 아니라 string type이며 값으로는 string으로 이루어진 배열을 가지고 있다는 것을 알려주기 위해
+// [key: string]: string[]; 이렇게 적어준다.
+
+// ▪️ Object.keys() 메서드
+// 주어진 객체(가로 안에 들어가는 객체)의 프로퍼티의 키를 배열로 반환
+
+// ▪️ Index Signatures (TS)
+// 프로퍼티의 이름(키)은 모르지만 값을 알 때 사용할 수 있는 방법
+// [ key : string ] : string[]
+// ㄴ 여기 [] 대괄호는 배열 아님
 
 // #7.9
+// - DropResult
+// draggableId: 드래그 되었던 Draggable의 id
+// type: 드래그 되었던 Draggable의 type
+// source: Draggable이 시작된 위치
+// destination: Draggable이 끝난 위치
 
 // #7.10
 
