@@ -960,6 +960,60 @@
 // source: Draggable이 시작된 위치
 // destination: Draggable이 끝난 위치
 
-// #7.10
+// #7.11
+// Droppablestate snapshot
+
+// isDraggingOver: boolean
+// 현재 선택한 Draggable이 특정 Droppable위에 드래깅 되고 있는지 여부 확인
+
+// draggingOverWith: ?DraggableId
+// Droppable 위로 드래그하는 Draggable ID
+
+// draggingFromThisWith: ?DraggableId
+// 현재 Droppable에서 벗어난 드래깅되고 있는 Draggable ID
+
+// isUsingPlaceholder: boolean
+// placeholder가 사용되고 있는지 여부
+
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/droppable.md#2-snapshot-droppablestatesnapshot
+
+// #7.12
+// Draggablestate snapshot
+
+// isDragging: boolean
+// Draggable이 활발하게 드래그 중이거나 드롭 애니메이션인 경우 true로 설정합니다.
+
+// https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/draggable.md#2-snapshot-draggablestatesnapshot
+
+// Flatuicolors
+// https://flatuicolors.com/palette/us
+
+// #7.13
+// useRef()
+// useRef는 .current 프로퍼티로 전달된 인자(initialValue)로 초기화된 변경 가능한 ref 객체를 반환합니다. 반환된 객체는 컴포넌트의 전 life cycle을 통해 유지될 것입니다.
+// 일반적인 사용 사례는 자식에게 접근하는 경우입니다.
+// 본질적으로 useRef는 .current 프로퍼티에 변경 가능한 값을 담고 있는 “상자”와 같습니다.
+
+// ref 속성보다 useRef()가 더 유용합니다. 이 기능은 클래스에서 인스턴스 필드를 사용하는 방법과 유사한 어떤 가변값을 유지하는 데에 편리합니다.
+// ```
+// const inputEl = useRef(null);
+
+// const onButtonClick = () => {
+// // `current` points to the mounted text input element
+// inputEl.current.focus();
+// };
+
+// < input ref={inputEl} type="text" / >
+// ```
+// https://ko.reactjs.org/docs/hooks-reference.html#useref
+
+// HTMLInputElement methods
+// https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#methods
+
+// #7.14
+
+// #7.15
+
+// #7.16
 
 // ----------------------------- //#7 Trello Clone -----------------------------
