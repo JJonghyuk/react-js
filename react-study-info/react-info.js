@@ -1017,3 +1017,64 @@
 // #7.16
 
 // ----------------------------- //#7 Trello Clone -----------------------------
+
+// ----------------------------- #8 Animations -----------------------------
+// #8.0
+// Framer
+
+// React용 production-ready 모션 라이브러리 (오픈 소스)
+// https://motion.dev/docs/react-animation
+// https://motion.dev/blog/framer-motion-is-now-independent-introducing-motion
+
+// #8.1
+
+// #8.2
+// const Box = styled(motion.div)`
+// `
+
+// - Animation
+// Framer Motion의 애니메이션은 모션 컴포넌트의 유연한 animate 속성을 통해 제어됩니다. 간단한 애니메이션의 경우 animate props에서 직접 값을 설정할 수 있습니다.
+// ex) motion.div animate={{ rotate: 360 }} transition={{ duration: 2 }}
+// https://www.framer.com/docs/animation
+
+// - initial: boolean | Target | VariantLabels (애니메이션의 초기값 지정)
+// 속성, 변형 레이블 또는 시작할 변형 레이블의 배열입니다.
+// animate의 값으로 초기화하려면 false로 설정합니다(마운트 애니메이션 비활성화).
+// https://www.framer.com/docs/component/###initial
+
+// - Transition
+// Transition은 값이 한 상태에서 다른 상태로 움직이는 방식을 정의합니다.
+// 또한 Tween, Spring 또는 Inertia를 사용할 애니메이션 유형을 정의하는 소품을 허용할 수 있습니다.
+// ex) motion.div animate={{ rotate: 180 }} transition={{ type: 'spring' }}
+// https://www.framer.com/docs/transition
+
+// #8.3
+// Variants
+
+// Variants은 컴포넌트가 가질 수 있는 미리 정의된 시각적 state입니다.
+// ex)
+// const variants = {
+//  visible: { opacity: 1 },
+//  hidden: { opacity: 0 },
+// }
+// <motion.div initial="hidden" animate="visible" variants={variants}>
+
+// https://www.framer.com/docs/introduction/##variants
+
+// #8.4
+
+// #8.5
+
+// #8.6
+
+// #8.7
+
+// #8.8
+
+// #8.9
+
+// #8.10
+
+// #8.11
+
+// ----------------------------- //#8 Animations -----------------------------
