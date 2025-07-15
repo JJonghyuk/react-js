@@ -875,7 +875,6 @@
 // 일반적으로 draggableId를 key로 사용하면 됩니다.
 // 주의! list에 key가 없으면 React가 경고하지만 index를 key로 사용하는 경우 경고하지 않습니다.
 // key를 올바르게 사용하지 않으면 정말 안 좋은 일이 생길 수 있습니다 💥
-// ```
 // return items.map((item, index) => (
 // < Draggable
 // // adding a key is important!
@@ -884,13 +883,10 @@
 // index={index}
 // >
 // 나머지 코드..
-// ```
 // https://github.com/atlassian/react-beautiful-dnd/blob/HEAD/docs/api/draggable.md#keys-for-a-list-of-draggable-
 
 // + Card를 드래그한 후 이동하지 않고, 다시 제자리에 놓았을 때, 콘솔창에 에러 발생하시는 분들은 destination?.index가 undefined일 때 return으로 함수를 종료시켜주시면 됩니다.
-// ```
 // if (destination?.index === undefined) return;
-// ```
 
 // #7.7
 // React.memo
@@ -903,13 +899,11 @@
 // 이 메서드는 오직 성능 최적화를 위하여 사용됩니다. 렌더링을 “방지”하기 위하여 사용하지 마세요. 버그를 만들 수 있습니다.
 
 // DraggableCard에게 동일한 index와 동일한 todo prop을 받으면 리랜더링을 하지 않도록 하기 위함이다.
-// ```
 // function MyComponent(props) {
 // /* props를 사용하여 렌더링 */
 // }
 
 // export default React.memo(MyComponent, areEqual);
-// ```
 // https://ko.reactjs.org/docs/react-api.html#reactmemo
 
 // #7.8
@@ -924,7 +918,6 @@
 // c: false
 // };
 // console.log(Object.keys(object1)); // Array ["a", "b", "c"]
-// ```
 // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 
 // {Object.keys(toDos).map((boardId) => (
@@ -995,7 +988,6 @@
 // 본질적으로 useRef는 .current 프로퍼티에 변경 가능한 값을 담고 있는 “상자”와 같습니다.
 
 // ref 속성보다 useRef()가 더 유용합니다. 이 기능은 클래스에서 인스턴스 필드를 사용하는 방법과 유사한 어떤 가변값을 유지하는 데에 편리합니다.
-// ```
 // const inputEl = useRef(null);
 
 // const onButtonClick = () => {
@@ -1004,7 +996,6 @@
 // };
 
 // < input ref={inputEl} type="text" / >
-// ```
 // https://ko.reactjs.org/docs/hooks-reference.html#useref
 
 // HTMLInputElement methods
@@ -1062,10 +1053,86 @@
 // https://www.framer.com/docs/introduction/##variants
 
 // #8.4
+// Orchestration
+// - delayChildren: 딜레이 시간(초) 후에 하위 애니메이션이 시작됩니다.
+// - staggerChildren: 하위 컴포넌트의 애니메이션에 지속 시간(초)만큼 시차를 둘 수 있습니다. 예를 들어, staggerChildren이 0.01이면 첫 번째 자식은 0초, 두 번째 자식은 0.01초, 세 번째 자식은 0.02초 지연되는 식입니다. 계산된 stagger 딜레이가 delayChildren에 추가됩니다.
+// https://www.framer.com/docs/transition/#orchestration
+
+// inherit: boolean
+// 부모로부터 variant 변경 사항을 상속하지 않도록 하려면 false로 설정합니다.
+
+// custom: any
+// 각 애니메이션 컴포넌트에 대해 dynamic variants을 다르게 사용할 사용자 지정 데이터입니다.
+// const variants = {
+//  visible: (custom) => ({
+//  opacity: 1,
+//  transition: { delay: custom * 0.2 }
+// })
+// }
+
+// < motion.div inherit={false} custom={0} animate="visible" variants={variants} / >
+// < motion.div custom={1} animate="visible" variants={variants} / >
+// < motion.div custom={2} animate="visible" variants={variants} / >
+// https://www.framer.com/docs/component/###inherit
+
+// place-items (Container Properties)
+// justify-items과 align-items를 합친 축약형
+
+// place-self (Item Properties)
+// justify-self와 align-self를 합친 축약형
 
 // #8.5
+// Hover
+// hover 제스처는 포인터가 컴포넌트 위로 이동하거나 컴포넌트를 떠날 때를 감지합니다. onMouseEnter 및 onMouseLeave와는 달리 실제 마우스 이벤트의 결과로만 호버가 실행되도록 보장됩니다.
+
+// - whileHover: VariantLabels | TargetAndTransition
+// 호버 제스처가 인식되는 동안 애니메이션할 속성 또는 변형 레이블입니다.
+// < motion.div whileHover={{ scale: 0.8 }} / >
+// https://www.framer.com/docs/gestures/#hover
+
+// Tap
+// - whileTap: VariantLabels | TargetAndTransition
+// 컴포넌트를 누르고 있는 동안 애니메이션할 속성 또는 변형 레이블입니다.
+// < motion.div whileTap={{ scale: 0.8 }} / >
+// https://www.framer.com/docs/gestures/#tap
+
+// Drag
+// - drag: boolean | "x" | "y"
+// 이 요소에 대해 끌기를 활성화합니다. 기본적으로 false로 설정됩니다. 양방향으로 드래그하려면 true로 설정하십시오. 특정 방향으로만 드래그하려면 "x" 또는 "y"를 설정합니다.
+// < motion.div drag="x" / >
+
+// - whileDrag: VariantLabels | TargetAndTransition
+// 드래그 제스처가 인식되는 동안 애니메이션할 속성 또는 변형 레이블입니다.
+// < motion.div whileDrag={{ scale: 1.2 }} / >
+// https://www.framer.com/docs/gestures/#drag
 
 // #8.6
+// - dragConstraints
+// 허용된 드래그 가능 영역에 제약 조건을 적용합니다.
+// dragConstraints 에는 드래그 가능한 컴포넌트의 가장자리 거리를 정의합니다. (드래그 가능한 영역에 가장자리에서 얼마만큼까지 허용할 것인지 지정)
+// // 픽셀 이용
+// < motion.div drag="x" dragConstraints={{ left: 0, right: 300 }}/ >
+
+// // ref이용
+// const MyComponent = () => {
+// const constraintsRef = useRef(null)
+
+// return (
+//  < motion.div ref={constraintsRef}>
+//  < motion.div drag dragConstraints={constraintsRef} />
+//. < /motion.div>
+// )
+// }
+
+// - dragSnapToOrigin: boolean
+// true인 경우 드래그 가능한 요소는 드래그를 놓을 때, 원점으로 다시 애니메이션됩니다.
+// ex) dragSnapToOrigin / dragSnapToOrigin={true}
+
+// - dragElastic: DragElastic
+// 외부 제약 조건에서 허용되는 이동 정도. 0 = 움직임 없음, 1 = 전체 움직임. 기본적으로 0.5로 설정됩니다. 움직임을 비활성화하기 위해 false로 설정할 수도 있습니다.
+// ex) dragElastic={0.2}
+
+// https://www.framer.com/docs/gestures/#drag
 
 // #8.7
 
