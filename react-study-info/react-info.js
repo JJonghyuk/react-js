@@ -1135,13 +1135,125 @@
 // https://www.framer.com/docs/gestures/#drag
 
 // #8.7
+// MotionValue
+// MotionValues는 애니메이션 값의 상태(state)와 속도(velocity)를 추적합니다. 모든 모션 컴포넌트는 내부적으로 MotionValues를 사용하여 애니메이션 값의 상태와 속도를 추적합니다. 일반적으로 이들은 자동으로 생성됩니다. (MotionValue는 React State가 아니기 때문에 Motion Value값이 바뀌어도 리랜더링이 일어나지 않는다.)
+// import { motion, useMotionValue } from "framer-motion"
+
+// export function MyComponent() {
+// const x = useMotionValue(0)
+// return < motion.div style={{ x }} />
+// }
+// const x = useMotionValue(0)
+// useMotionValue 후크로 MotionValues를 생성할 수 있습니다. useMotionValue에 전달된 값은 MotionValue의 초기 상태로 작동합니다.
+
+// x.set(100)
+// set 메서드로 업데이트할 수 있습니다.
+// 이것은 React 리렌더링을 트리거하지 않습니다.
+
+// x.get() // 100
+// MotionValue는 문자열이나 숫자가 될 수 있습니다.
+// get 메소드로 값을 읽을 수 있습니다.
+// https://www.framer.com/docs/motionvalue/
+
+// useEffect(() => {
+//   x.on("change", () => console.log(x.get()));
+// }); --> x 값 확인 할 수 있음
 
 // #8.8
+// - useTransform
+// useTransform 훅을 통해 MotionValues를 연결합니다.
+// useTransform()는 한 값 범위에서 다른 값 범위로 매핑하여 다른 MotionValue의 output을 변환하는 MotionValue를 만듭니다.
+// x(Motion Value)값을 다른 output값으로 변환해준다.
+// ex) x: -400 => 1
+// const x = useMotionValue(0)
+// const input = [-200, 0, 200]
+// const output = [0, 1, 0]
+// const opacity = useTransform(x, input, output)
+
+// return < motion.div drag="x" style={{ x, opacity }} />
+// https://www.framer.com/docs/motionvalue/##usetransform
 
 // #8.9
+// linear-gradient
+// "linear-gradient(135deg, rgb(0, 210, 238), rgb(0, 83, 238))",
+// "linear-gradient(135deg, rgb(238, 0, 153), rgb(221, 0, 238))",
+// "linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0))",
+
+// - useScroll(): ScrollMotionValues
+// 뷰포트가 스크롤될 때 업데이트되는 MotionValues를 리턴합니다.
+// 아래 값들은 모두 MotionValue< number >를 넘겨줍니다.
+// scrollX: 실제 수평 스크롤 픽셀 ex) 500px
+// scrollY: 실제 수직 스크롤 픽셀 ex) 500px
+// scrollXProgress : 0 ~ 1 사이의 수평 스크롤
+// scrollYProgress : 0 ~ 1 사이의 수직 스크롤(가장 상단 0, 가장 하단 1)
+
+// export const MyComponent = () => {
+// const { scrollYProgress } = useScroll()
+// return < motion.div style={{ scaleX: scrollYProgress }} />
+// }
 
 // #8.10
+// Fontawesome Airbnb Logo
+// < />모양 클릭해서 svg복사 후 사용하시면 됩니다.
+// https://fontawesome.com/v5.15/icons/airbnb?style=brands
+
+// Line drawing
+// svg 엘리먼트에 'pathLength', 'pathSpacing', 'pathOffset' 속성을 사용하여 Line drawing 애니메이션을 만들 수 있습니다.
+// https://www.framer.com/docs/examples/#line-drawing
+
+// path (SVG)
+// path SVG 엘리먼트는 모양을 정의하는 일반 엘리먼트입니다.모든 기본 모양은 path 엘리먼트로 만들 수 있습니다.
+// path의 속성 d는 경로의 모양을 정의합니다.
+// https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path
+
+// Path
+// motion.path 컴포넌트는 세 가지 강력한 SVG path 속성인 pathLength, pathSpacing 및 pathOffset을 가지고 있습니다. 수동 경로 측정이 필요 없이 모두 0과 1 사이의 값으로 설정됩니다.
+
+// Line drawing
+// 선 그리기 애니메이션은 pathLength, pathSpacing 및 pathOffset의 세 가지 특수 속성을 사용하여 많은 SVG 요소로 만들 수 있습니다.
+// ex) motion.circle initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+// https://www.framer.com/docs/examples/#line-drawing
 
 // #8.11
+// AnimatePresence --> 항상 visible(보이는) 상태여야 한다.
+// ex)
+// <AnimatePresence>
+//   {showing ? (
+//     <Box
+//       variants={boxVariants}
+//       initial="initial"
+//       animate="visible"
+//       exit="leaving"
+//     />
+//   ) : null}
+// </AnimatePresence>
+
+// AnimatePresence를 사용하면 React 트리에서 컴포넌트가 제거될 때 제거되는 컴포넌트에 애니메이션 효과를 줄 수 있습니다. React에는 다음과 같은 수명 주기 메서드가 없기 때문에 종료 애니메이션을 활성화해야 합니다.
+
+// - exit
+// 이 컴포넌트가 트리에서 제거될 때 애니메이션할 대상입니다.
+// import { motion, AnimatePresence } from "framer-motion"
+
+// export const MyComponent = ({ isVisible }) => (
+//  < AnimatePresence>
+//   {isVisible && (
+//   initial={{ opacity: 0 }}
+//   animate={{ opacity: 1 }}
+//   exit={{ opacity: 0 }}
+//  />
+// )}
+//  </AnimatePresence>
+// )
+// https://www.framer.com/docs/animate-presence/
+
+// #8.12
+
+// #8.13
+
+// #8.14
+
+// #8.15
+
+// #8.16
 
 // ----------------------------- //#8 Animations -----------------------------
