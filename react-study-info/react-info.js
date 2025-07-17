@@ -1026,18 +1026,15 @@
 // - Animation
 // Framer Motion의 애니메이션은 모션 컴포넌트의 유연한 animate 속성을 통해 제어됩니다. 간단한 애니메이션의 경우 animate props에서 직접 값을 설정할 수 있습니다.
 // ex) motion.div animate={{ rotate: 360 }} transition={{ duration: 2 }}
-// https://www.framer.com/docs/animation
 
 // - initial: boolean | Target | VariantLabels (애니메이션의 초기값 지정)
 // 속성, 변형 레이블 또는 시작할 변형 레이블의 배열입니다.
 // animate의 값으로 초기화하려면 false로 설정합니다(마운트 애니메이션 비활성화).
-// https://www.framer.com/docs/component/###initial
 
 // - Transition
 // Transition은 값이 한 상태에서 다른 상태로 움직이는 방식을 정의합니다.
 // 또한 Tween, Spring 또는 Inertia를 사용할 애니메이션 유형을 정의하는 소품을 허용할 수 있습니다.
 // ex) motion.div animate={{ rotate: 180 }} transition={{ type: 'spring' }}
-// https://www.framer.com/docs/transition
 
 // #8.3
 // Variants
@@ -1050,13 +1047,10 @@
 // }
 // <motion.div initial="hidden" animate="visible" variants={variants}>
 
-// https://www.framer.com/docs/introduction/##variants
-
 // #8.4
 // Orchestration
 // - delayChildren: 딜레이 시간(초) 후에 하위 애니메이션이 시작됩니다.
 // - staggerChildren: 하위 컴포넌트의 애니메이션에 지속 시간(초)만큼 시차를 둘 수 있습니다. 예를 들어, staggerChildren이 0.01이면 첫 번째 자식은 0초, 두 번째 자식은 0.01초, 세 번째 자식은 0.02초 지연되는 식입니다. 계산된 stagger 딜레이가 delayChildren에 추가됩니다.
-// https://www.framer.com/docs/transition/#orchestration
 
 // inherit: boolean
 // 부모로부터 variant 변경 사항을 상속하지 않도록 하려면 false로 설정합니다.
@@ -1073,7 +1067,6 @@
 // < motion.div inherit={false} custom={0} animate="visible" variants={variants} / >
 // < motion.div custom={1} animate="visible" variants={variants} / >
 // < motion.div custom={2} animate="visible" variants={variants} / >
-// https://www.framer.com/docs/component/###inherit
 
 // place-items (Container Properties)
 // justify-items과 align-items를 합친 축약형
@@ -1088,13 +1081,11 @@
 // - whileHover: VariantLabels | TargetAndTransition
 // 호버 제스처가 인식되는 동안 애니메이션할 속성 또는 변형 레이블입니다.
 // < motion.div whileHover={{ scale: 0.8 }} / >
-// https://www.framer.com/docs/gestures/#hover
 
 // Tap
 // - whileTap: VariantLabels | TargetAndTransition
 // 컴포넌트를 누르고 있는 동안 애니메이션할 속성 또는 변형 레이블입니다.
 // < motion.div whileTap={{ scale: 0.8 }} / >
-// https://www.framer.com/docs/gestures/#tap
 
 // Drag
 // - drag: boolean | "x" | "y"
@@ -1104,7 +1095,6 @@
 // - whileDrag: VariantLabels | TargetAndTransition
 // 드래그 제스처가 인식되는 동안 애니메이션할 속성 또는 변형 레이블입니다.
 // < motion.div whileDrag={{ scale: 1.2 }} / >
-// https://www.framer.com/docs/gestures/#drag
 
 // #8.6
 // - dragConstraints
@@ -1132,8 +1122,6 @@
 // 외부 제약 조건에서 허용되는 이동 정도. 0 = 움직임 없음, 1 = 전체 움직임. 기본적으로 0.5로 설정됩니다. 움직임을 비활성화하기 위해 false로 설정할 수도 있습니다.
 // ex) dragElastic={0.2}
 
-// https://www.framer.com/docs/gestures/#drag
-
 // #8.7
 // MotionValue
 // MotionValues는 애니메이션 값의 상태(state)와 속도(velocity)를 추적합니다. 모든 모션 컴포넌트는 내부적으로 MotionValues를 사용하여 애니메이션 값의 상태와 속도를 추적합니다. 일반적으로 이들은 자동으로 생성됩니다. (MotionValue는 React State가 아니기 때문에 Motion Value값이 바뀌어도 리랜더링이 일어나지 않는다.)
@@ -1153,7 +1141,6 @@
 // x.get() // 100
 // MotionValue는 문자열이나 숫자가 될 수 있습니다.
 // get 메소드로 값을 읽을 수 있습니다.
-// https://www.framer.com/docs/motionvalue/
 
 // useEffect(() => {
 //   x.on("change", () => console.log(x.get()));
@@ -1171,7 +1158,6 @@
 // const opacity = useTransform(x, input, output)
 
 // return < motion.div drag="x" style={{ x, opacity }} />
-// https://www.framer.com/docs/motionvalue/##usetransform
 
 // #8.9
 // linear-gradient
@@ -1199,7 +1185,6 @@
 
 // Line drawing
 // svg 엘리먼트에 'pathLength', 'pathSpacing', 'pathOffset' 속성을 사용하여 Line drawing 애니메이션을 만들 수 있습니다.
-// https://www.framer.com/docs/examples/#line-drawing
 
 // path (SVG)
 // path SVG 엘리먼트는 모양을 정의하는 일반 엘리먼트입니다.모든 기본 모양은 path 엘리먼트로 만들 수 있습니다.
@@ -1212,7 +1197,6 @@
 // Line drawing
 // 선 그리기 애니메이션은 pathLength, pathSpacing 및 pathOffset의 세 가지 특수 속성을 사용하여 많은 SVG 요소로 만들 수 있습니다.
 // ex) motion.circle initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-// https://www.framer.com/docs/examples/#line-drawing
 
 // #8.11
 // AnimatePresence --> 항상 visible(보이는) 상태여야 한다.
@@ -1244,13 +1228,85 @@
 // )}
 //  </AnimatePresence>
 // )
-// https://www.framer.com/docs/animate-presence/
 
 // #8.12
+// - AnimatePresence
+// AnimatePresence의 단일 자식 key를 변경하여 슬라이드쇼(슬라이더)와 같은 컴포넌트를 쉽게 만들 수 있습니다.
+
+// export const Slideshow = ({ image }) => (
+// < AnimatePresence>
+//  key={image.src}
+//  src={image.src}
+//  initial={{ x: 300, opacity: 0 }}
+//  animate={{ x: 0, opacity: 1 }}
+//  exit={{ x: -300, opacity: 0 }}
+// />
+// < /AnimatePresence>
+// )
+
+// Slider 예시 코드
+// https://codesandbox.io/s/framer-motion-image-gallery-pqvx3?from-embed
 
 // #8.13
+// - custom
+// 각 애니메이션 컴포넌트에 대해 동적 variants를 다르게 적용할 때 사용할 수 있는 사용자 지정 데이터입니다.
+// const variants = {
+//  visible: (custom) => ({
+//  opacity: 1,
+//  transition: { delay: custom * 0.2 }
+// })
+// }
+
+// < motion.div custom={0} animate="visible" variants={variants} />
+// < motion.div custom={1} animate="visible" variants={variants} />
+// < motion.div custom={2} animate="visible" variants={variants} />
+
+// * custom = {} 값을 설정해줘야 한다. (AnimatePresence 와 내부 자식)
+// <AnimatePresence mode="wait" custom={back}>
+//   <Box
+//     custom={back}
+//     key={visible}
+//     variants={box}
+//     initial="entry"
+//     animate="center"
+//     exit="exit"
+//   >
+//     {visible}
+//   </Box>
+// </AnimatePresence>
+
+// - mode="wait"
+// true로 설정하면 AnimatePresence는 한 번에 하나의 컴포넌트만 랜더링합니다. exiting중인 컴포넌트는 entering하는 컴포넌트가 렌더링되기 전에 exit 애니메이션을 완료합니다.
+
+// < AnimatePresence mode="wait">
+//  < motion.div key={currentItem} exit={{ opacity: 0 }} />
+// < /AnimatePresence>
 
 // #8.14
+// *Layout animation
+// - layout: boolean | "position" | "size"
+// true인 경우 이 컴포넌트는 레이아웃이 변경될 때 새 위치에 자동으로 애니메이션을 적용합니다. 크기나 위치가 변경될 때 모션 컴포넌트의 레이아웃에 자동으로 애니메이션을 적용하려면 레이아웃 prop을 제공합니다. 부모 플렉스박스 방향, 너비, 상단/오른쪽 등 레이아웃 변경의 원인이 무엇이든 상관없이 애니메이션 자체는 최대 성능을 위해 변환으로 수행됩니다.
+// ex)
+// <Box style={{ justifyContent: clicked ? "center" : "flex-start" }}>
+//   <Circle layout />
+// </Box>
+
+// Syncing layout animations
+// 모션 컴포넌트의 layout prop은 레이아웃이 변할 때마다, 자동으로 애니메이션을 적용합니다.
+
+// Animate between components
+// AnimateSharedLayout은 동일한 layoutId prop을 가진 모션 컴포넌트들 간에 애니메이션을 적용할 수 있습니다. layoutId가 있는 새 컴포넌트가 추가되고 다른 컴포넌트가 제거되면 이전 컴포넌트에서 새 컴포넌트로 레이아웃 애니메이션을 수행합니다. 새 컴포넌트는 이전 컴포넌트의 애니메이션 값도 초기 상태로 상속합니다. 따라서 시각적으로 하나의 연속 컴포넌트로 처리됩니다.
+// ex)
+// <Box>
+//   {!clicked ? (
+//     <Circle layoutId="circle" style={{ borderRadius: 50 }} />
+//   ) : null}
+// </Box>
+// <Box>
+//   {clicked ? (
+//     <Circle layoutId="circle" style={{ borderRadius: 0, scale: 2 }} />
+//   ) : null}
+// </Box>
 
 // #8.15
 
