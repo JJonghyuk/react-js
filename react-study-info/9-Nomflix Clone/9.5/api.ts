@@ -1,4 +1,4 @@
-//const API_KEY = "56f17d23761f084dca10bed06aa39dfc";
+const API_KEY = "";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
 export function getMovies() {
