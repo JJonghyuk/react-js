@@ -1,15 +1,16 @@
 import styled from "styled-components";
-import { motion, useAnimation, useScroll } from "motion/react";
+import { motion, scale } from "motion/react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const Nav = styled(motion.nav)`
+const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   width: 100%;
   top: 0;
+  background-color: black;
   font-size: 14px;
   padding: 20px 60px;
   color: white;
@@ -25,10 +26,10 @@ const Logo = styled(motion.svg)`
   width: 95px;
   height: 25px;
   fill: ${(props) => props.theme.red};
-  /* path {
+  path {
     stroke-width: 6px;
     stroke: white;
-  } */
+  }
 `;
 
 const Items = styled.ul`
@@ -73,15 +74,8 @@ const Circle = styled(motion.span)`
 
 const Input = styled(motion.input)`
   position: absolute;
+  left: -150px;
   transform-origin: right center;
-  right: 0px;
-  padding: 5px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  color: white;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
 const logoVariants = {
@@ -94,45 +88,13 @@ const logoVariants = {
   },
 };
 
-const navVariants = {
-  top: {
-    backgroundColor: "rgba(0,0,0,0)",
-  },
-  scroll: {
-    backgroundColor: "rgba(0,0,0,1)",
-  },
-};
-
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch = useRouteMatch("/");
   const tvMatch = useRouteMatch("/tv");
-  const inputAnimation = useAnimation();
-  const navAnimation = useAnimation();
-  const { scrollY } = useScroll();
-  const toggleSearch = () => {
-    if (searchOpen) {
-      inputAnimation.start({
-        scaleX: 0,
-      });
-    } else {
-      inputAnimation.start({
-        scaleX: 1,
-      });
-    }
-    setSearchOpen((prev) => !prev);
-  };
-  useEffect(() => {
-    scrollY.on("change", () => {
-      if (scrollY.get() > 80) {
-        navAnimation.start("scroll");
-      } else {
-        navAnimation.start("top");
-      }
-    });
-  }, [navAnimation]);
+  const toggleSearch = () => setSearchOpen((prev) => !prev);
   return (
-    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
+    <Nav>
       <Col>
         <Logo
           variants={logoVariants}
@@ -161,10 +123,10 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search title="검색 버튼">
+        <Search>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -185 : 0 }}
+            animate={{ x: searchOpen ? -180 : 0 }}
             transition={{ ease: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -177,12 +139,9 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            type="search"
-            animate={inputAnimation}
-            initial={{ scaleX: 0 }}
+            animate={{ scaleX: searchOpen ? 1 : 0 }}
             transition={{ ease: "linear" }}
             placeholder="검색어를 입력해주세요."
-            title="검색어를 입력해주세요."
           />
         </Search>
       </Col>

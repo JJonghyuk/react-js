@@ -1338,10 +1338,56 @@
 // 호버 제스처가 인식되는 동안 애니메이션할 속성 또는 variant label입니다.
 
 // #9.03
+// - transform-origin
+// transform-origin CSS 속성은 엘리먼트 transformation의 원점을 설정합니다.
+// transform-origin: center;
+// transform-origin: top left;
+// transform-origin: bottom right 60px;
+
+// https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin
 
 // #9.04
+// - useAnimation()
+// useAnimation 훅을 사용하여 시작 및 중지 메서드가 있는 AnimationControls을 만들 수 있습니다.
+// ```
+// const MyComponent = () => {
+// const controls = useAnimation()
+// return < motion.div animate={controls} />
+// }
+
+// 애니메이션은 controls.start 메소드로 시작할 수 있습니다.
+// controls.start({ x: "100%", transition: { duration: 3 }})
+// ex) navAnimation.start("scroll");
+
+// useViewportScroll(): ScrollMotionValues
+// viewport가 스크롤될 때 업데이트되는 MotionValues를 반환합니다.
+// 주의! body 또는 html을 height: 100% 또는 이와 유사한 것으로 설정하면 페이지 길이를 정확하게 측정하는 브라우저의 기능이 손상되므로 Progress 값이 손상됩니다.
+
+// export const MyComponent = () => {
+// const { scrollYProgress } = useViewportScroll()
+//  return < motion.div style={{ scaleX: scrollYProgress }} />
+// }
 
 // #9.05
+// TheMovieDB API Key
+// https://www.themoviedb.org/settings/api?language=ko
+
+// TheMovieDB API Document
+// https://developers.themoviedb.org/3/movies/get-now-playing
+
+// TheMovieDB Image가져오기
+// 이미지 파일명 앞에 https://image.tmdb.org/t/p/original/ 붙이기
+
+// BASE_PATH
+// https://api.themoviedb.org/3/
+
+// React Query
+// const { isLoading, error, data } = useQuery('repoData', () =>
+//  fetch('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
+//   res.json()
+//  )
+// )
+// https://react-query.tanstack.com/overview
 
 // #9.06
 
