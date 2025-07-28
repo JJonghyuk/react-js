@@ -1392,5 +1392,45 @@
 // #9.06
 
 // #9.07
+// window.outerWidth : 브라우저 전체의 너비
+// window.outerHeight : 브라우저 전체의 높이
+// window.innerWidth : 브라우저 화면의 너비
+// window.innerHeight : 브라우저 화면의 높이
+
+// outerWidth vs innerWidth 비교 이미지
+// https://www.cluemediator.com/how-to-get-the-window-size-in-javascript
+
+// window.outerWidth	/ 브라우저 전체 창 너비	/ 브라우저 프레임, 툴바, 주소창 포함
+// window.innerWidth	/ 브라우저 콘텐츠 영역 너비	/ 스크롤바 포함, 콘텐츠만 표시되는 영역
+
+// #9.08
+// AnimatePresence
+
+// - onExitComplete
+// exit 중인 모든 노드들이 애니메이션을 끝내면 실행됩니다.
+// ex) AnimatePresenceProps.onExitComplete?: (() => void) | undefined
+// https://www.framer.com/docs/animate-presence/###onexitcomplete
+
+// - initial
+// initial={false}를 전달하면 AnimatePresence는 컴포넌트가 처음 렌더링될 때 자식의 초기 애니메이션을 비활성화합니다.
+
+// - slice()
+// slice() 메서드는 어떤 배열의 begin부터 end까지(end 미포함)에 대한 얕은 복사본을 새로운 배열 객체로 반환합니다. 원본 배열은 바뀌지 않습니다.
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+
+// Math.ceil() --> 올림 숫자 ex) 4.2 -> 5
+// Math.floor() --> 내림 숫자 ex) 4.2 -> 4
+
+// #9.09
+
+// #9.10
+
+// #9.11
+
+// #9.12
+
+// #9.13
+
+// #9.14
 
 // ----------------------------- //#9 Nomflix Clone -----------------------------

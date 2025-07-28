@@ -9,6 +9,7 @@ import useWindowWidth from "../useWindowWidth";
 const Wrapper = styled.div`
   overflow-x: hidden;
   padding-bottom: 200px;
+  background: black;
 `;
 
 const Loader = styled.div`
@@ -58,29 +59,11 @@ const Box = styled(motion.div).withConfig({
   shouldForwardProp: (prop) => prop !== "bgPhoto",
 })<{ bgPhoto: string }>`
   height: 200px;
+  color: red;
   font-size: 66px;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-
-const Info = styled(motion.div)`
-  opacity: 1;
-  position: absolute;
-  bottom: 0;
-  padding: 10px;
-  width: 100%;
-  background-color: ${(props) => props.theme.black.lighter};
-  h4 {
-    font-size: 18px;
-    text-align: center;
-  }
 `;
 
 // const rowVariants = {
@@ -94,32 +77,6 @@ const Info = styled(motion.div)`
 //     x: -window.outerWidth,
 //   },
 // };
-
-const boxVariants: Variants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.3,
-    y: -50,
-    transition: {
-      delay: 0.5,
-      duration: 0.2,
-      type: "tween",
-    },
-  },
-};
-
-const infoVariants: Variants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duration: 0.2,
-      type: "tween",
-    },
-  },
-};
 
 const offset = 6;
 
@@ -175,15 +132,7 @@ function Home() {
                         movie.backdrop_path || movie.poster_path,
                         "w500",
                       )}
-                      variants={boxVariants}
-                      initial="normal"
-                      whileHover="hover"
-                      transition={{ type: "tween" }}
-                    >
-                      <Info variants={infoVariants}>
-                        <h4>{movie.title}</h4>
-                      </Info>
-                    </Box>
+                    />
                   ))}
               </Row>
             </AnimatePresence>
