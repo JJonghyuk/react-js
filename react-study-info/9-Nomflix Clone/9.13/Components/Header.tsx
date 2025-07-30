@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "motion/react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -50,20 +49,14 @@ const Item = styled.li`
   }
 `;
 
-const SearchForm = styled.form`
+const Search = styled.button`
   position: relative;
   display: flex;
   align-items: center;
-  width: 25px;
-  height: 25px;
   color: white;
-`;
-
-const Search = styled(motion.button)`
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  height: 25px;
+  svg {
+    height: 25px;
+  }
 `;
 
 const Circle = styled(motion.span)`
@@ -110,10 +103,6 @@ const navVariants = {
   },
 };
 
-interface IForm {
-  keyword: string;
-}
-
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch = useRouteMatch("/");
@@ -141,12 +130,8 @@ function Header() {
         navAnimation.start("top");
       }
     });
-  }, [scrollY, navAnimation]);
-  const history = useHistory();
-  const { register, handleSubmit } = useForm<IForm>();
-  const onValid = (data: IForm) => {
-    history.push(`/search?keyword=${data.keyword}`);
-  };
+  }, [navAnimation]);
+  
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
@@ -177,36 +162,30 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <SearchForm onSubmit={handleSubmit(onValid)}>
-          <Search
-            type="button"
+        <Search title="검색 버튼">
+          <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -185 : 0 }}
             transition={{ ease: "linear" }}
-            title="검색 창 열기"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              fill="white"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </Search>
+            <path
+              fillRule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clipRule="evenodd"
+            ></path>
+          </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
-            type="text"
+            type="search"
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ ease: "linear" }}
             placeholder="검색어를 입력해주세요."
             title="검색어를 입력해주세요."
           />
-        </SearchForm>
+        </Search>
       </Col>
     </Nav>
   );

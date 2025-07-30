@@ -1,4 +1,6 @@
+import Banner from "../Components/Banner";
+
 function Tv() {
-  return <h1>Tv</h1>;
+  return <Banner type="tv" category="popular" />;
 }
 export default Tv;

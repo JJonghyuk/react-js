@@ -9,11 +9,6 @@ interface IMovie {
   overview: string;
 }
 
-interface MovieProps {
-  type: string;
-  category: string;
-}
-
 export interface IGetMoviesResult {
   dates: {
     maximum: string;
@@ -25,8 +20,8 @@ export interface IGetMoviesResult {
   total_results: number;
 }
 
-export function getMovies({ type, category }: MovieProps) {
-  return fetch(`${BASE_PATH}/${type}/${category}?api_key=${API_KEY}`).then(
+export function getMovies() {
+  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
     (response) => response.json(),
   );
 }

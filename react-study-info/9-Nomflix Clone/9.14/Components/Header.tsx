@@ -141,7 +141,7 @@ function Header() {
         navAnimation.start("top");
       }
     });
-  }, [scrollY, navAnimation]);
+  }, [navAnimation]);
   const history = useHistory();
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = (data: IForm) => {

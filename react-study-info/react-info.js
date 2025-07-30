@@ -1426,11 +1426,80 @@
 // #9.10
 
 // #9.11
+// React Router 5=>6 버전에서 변경된 점
+// 1. useHistory() => useNavigate()
+
+// // Home.tsx
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
+// navigate(`/movies/${movieId}`);
+
+// // App.tsx
+// < Route path="/" element={< Home />}>
+// < Route path="movies/:id" element={< Home />} />
+// < /Route>
+
+// https://reactrouter.com/docs/en/v6/upgrading/v5#use-usenavigate-instead-of-usehistory
+
+// 2. useRouteMatch() => useMatch()
+// import { useMatch, PathMatch } from "react-router-dom";
+// const moviePathMatch: PathMatch< string> | null = useMatch("/movies/:id");
+
+// https://reactrouter.com/docs/en/v6/upgrading/v5#replace-useroutematch-with-usematch
+
+// useHistory() (react-router-dom v5)
+// => useNavigate() (react-router-dom v6)
+
+// history.push(" *** ")
+// => navigate(" *** ")
 
 // #9.12
+// BigMovie에 style속성을 사용하지 않고 scrollY를 스타일 컴포넌트의 prop로 전달해서 처리하려면 아래와 같이 할 수 있습니다.
+
+// // Home.tsx
+// const BigMovie = styled(motion.div) < { scrolly: number} >`
+// top: ${(props) => props.scrolly + 200}px;
+// `;
+
+// BigMovie scrolly={scrollY.get()}
+
+// Movies (Get Details)
+// GET /movie/{movie_id}
+// https://developers.themoviedb.org/3/movies/get-movie-details
 
 // #9.13
+// Array.prototype.find()
+
+// find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의 값을 반환합니다.
+// 그런 요소가 없다면 undefined를 반환합니다.
+// const array1 = [5, 12, 8, 130, 44];
+
+// const found = array1.find(element => element > 10);
+
+// console.log(found); // expected output: 12
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/find
 
 // #9.14
+// React Router 6버전 사용시
+// useHistory ->
+// const navigate: NavigateFunction = useNavigate();
+// navigate(`/search?keyword=${keyword}`);
+
+// URLSearchParams
+// URL에서 특정 쿼리 문자열을 가져오거나 수정할 때 사용한다.
+
+// const paramsString="?keyword=%EB%A9%94%EC%9D%B4"
+// const searchParams = new URLSearchParams(paramsString);
+
+// searchParams.get("keyword"); // 결과: 메이
+
+// https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+// TheMovieDB Search Movies
+// API: https://api.themoviedb.org/3/search/movie?api_key=api_key&language=en-US&query=hello&page=1&include_adult=false
+// https://developers.themoviedb.org/3/search/search-movies
+
+// TheMovieDB Search TV Shows
+// https://developers.themoviedb.org/3/search/search-tv-shows
 
 // ----------------------------- //#9 Nomflix Clone -----------------------------
