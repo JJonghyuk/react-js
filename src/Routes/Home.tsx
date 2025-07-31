@@ -22,22 +22,10 @@ const Loader = styled.div`
   align-items: center;
 `;
 
-// const rowVariants = {
-//   hidden: {
-//     x: window.outerWidth,
-//   },
-//   visible: {
-//     x: 0,
-//   },
-//   exit: {
-//     x: -window.outerWidth,
-//   },
-// };
-
 function Home() {
   const { isLoading } = useQuery<IGetMoviesResult>({
-    queryKey: ["movies", "nowPlaying"],
-    queryFn: () => getMovies({ type: "movie", category: "now_playing" }),
+    queryKey: ["movieBanner01", "popular"],
+    queryFn: () => getMovies({ type: "movie", category: "popular" }),
   });
 
   return (
@@ -46,7 +34,7 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner type="movie" category="popular" />
+          <Banner id="movieBanner01" type="movie" category="popular" />
           <Movie
             id="movie01"
             type="movie"

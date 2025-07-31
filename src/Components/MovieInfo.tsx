@@ -7,6 +7,7 @@ import { makeImagePath } from "../utils";
 
 const Overlay = styled(motion.div)`
   opacity: 0;
+  z-index: 199;
   position: fixed;
   top: 0;
   width: 100%;
@@ -15,21 +16,39 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigMovie = styled(motion.div)`
+  z-index: 200;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  margin: 0 auto;
-  width: 40vw;
-  height: 80vh;
+  bottom: 0;
+  margin: auto;
+  width: 45vw;
+  height: 85vh;
   border-radius: 15px;
   background-color: ${(props) => props.theme.black.lighter};
+  &:before {
+    content: "";
+    z-index: 1;
+    display: block;
+    position: absolute;
+    top: 300px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(24, 24, 24, 1) 40%
+    );
+  }
 `;
 
 const BigCover = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 70%;
   &:before {
     content: "";
     display: block;
@@ -42,20 +61,62 @@ const BigCover = styled.div`
   }
 `;
 
-const BigImg = styled.img`
+const BigCoverImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
 `;
 
-const BigTitle = styled.h2`
-  color: ${(props) => props.theme.white.lighter};
-  text-align: center;
-  font-size: 36px;
+const BigContImgBox = styled.div`
+  overflow: hidden;
+  position: absolute;
+  top: -40px;
+  left: 40px;
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 `;
 
-const BigOverview = styled.p``;
+const BigContImg = styled.img`
+  width: auto;
+  height: 100%;
+`;
+
+const BigContent = styled.div`
+  z-index: 2;
+  position: relative;
+  top: -10%;
+  padding: 20px 20px 20px 280px;
+  width: 100%;
+  height: 40%;
+`;
+
+const BigTitle = styled.h2`
+  margin-bottom: 10px;
+  color: ${(props) => props.theme.white.lighter};
+  font-size: 32px;
+  font-weight: 600;
+`;
+
+const BigOverview = styled.p`
+  margin-top: 10px;
+  font-size: 16px;
+  width: 100%;
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
+const ReleaseDate = styled.span``;
+
+const Rating = styled.span`
+  margin-left: 20px;
+`;
 
 const CloseBtn = styled.button`
   cursor: pointer;
@@ -72,52 +133,66 @@ const CloseBtn = styled.button`
 `;
 
 interface MovieProps {
+  id: string;
   type: string;
   category: string;
 }
 
-function MovieInfo({ type, category }: MovieProps) {
-  const { scrollY } = useScroll();
+function MovieInfo({ id, type, category }: MovieProps) {
   const history = useHistory();
   const { data } = useQuery<IGetMoviesResult>({
-    queryKey: [type, category],
+    queryKey: [id, category],
     queryFn: () => getMovies({ type, category }),
   });
-  const bigMovieMatch = useRouteMatch<{ movieId: string }>("/movies/:movieId");
+  const bigMovieMatch = useRouteMatch<{ movieId: string }>(
+    `/${type}/${category}/:movieId`,
+  );
   const clickedMovie =
     bigMovieMatch?.params.movieId &&
     data?.results.find(
       (movie) => String(movie.id) === bigMovieMatch.params.movieId,
     );
-  console.log(clickedMovie);
 
-  const onOverlayClick = () => history.push("/");
+  const movieInfoClose = () => {
+    if (type === "movie") {
+      history.push("/");
+    } else if (type === "tv") {
+      history.push("/tv");
+    }
+  };
+
   return (
     <>
       <AnimatePresence>
         {bigMovieMatch ? (
           <>
             <Overlay
-              onClick={onOverlayClick}
+              onClick={movieInfoClose}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
-            <BigMovie
-              layoutId={bigMovieMatch.params.movieId}
-              style={{
-                top: scrollY.get() + 100,
-              }}
-            >
+            <BigMovie layoutId={`move-${id}-${bigMovieMatch.params.movieId}`}>
               {clickedMovie && (
                 <>
                   <BigCover>
-                    <BigImg src={makeImagePath(clickedMovie.backdrop_path)} />
+                    <BigCoverImg
+                      src={makeImagePath(clickedMovie.backdrop_path)}
+                    />
                   </BigCover>
-                  <BigTitle>{clickedMovie.title}</BigTitle>
-                  <BigOverview>{clickedMovie.overview}</BigOverview>
+                  <BigContent>
+                    <BigContImgBox>
+                      <BigContImg
+                        src={makeImagePath(clickedMovie.poster_path)}
+                      />
+                    </BigContImgBox>
+                    <BigTitle>{clickedMovie.title}</BigTitle>
+                    <ReleaseDate>{clickedMovie.release_date}</ReleaseDate>
+                    <Rating>{clickedMovie.vote_average}</Rating>
+                    <BigOverview>{clickedMovie.overview}</BigOverview>
+                  </BigContent>
                 </>
               )}
-              <CloseBtn type="button" onClick={onOverlayClick}>
+              <CloseBtn type="button" onClick={movieInfoClose}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="30px"

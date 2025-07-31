@@ -14,9 +14,11 @@ const BannerItem = styled.div.withConfig({
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
   background-size: cover;
+  background-position: center;
 `;
 
 const Title = styled.h2`
+  width: 70%;
   font-size: 50px;
   font-weight: 600;
   margin-bottom: 20px;
@@ -25,14 +27,21 @@ const Title = styled.h2`
 const Overview = styled.p`
   font-size: 24px;
   width: 50%;
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 interface BannerProps {
+  id: string;
   type: string;
   category: string;
 }
 
-function Banner({ type, category }: BannerProps) {
+function Banner({ id, type, category }: BannerProps) {
   const { data } = useQuery<IGetMoviesResult>({
     queryKey: [type, category],
     queryFn: () => getMovies({ type, category }),

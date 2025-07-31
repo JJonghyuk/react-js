@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,13 +166,17 @@ function Header() {
           <Item>
             <Link to={"/"}>
               Home
-              {homeMatch?.isExact && <Circle layoutId="circle" />}
+              {homeMatch?.isExact && (
+                <Circle layoutId="circle" style={{ originY: "0px" }} />
+              )}
             </Link>
           </Item>
           <Item>
             <Link to={"/tv"}>
               Tv Shows
-              {tvMatch && <Circle layoutId="circle" />}
+              {tvMatch && (
+                <Circle layoutId="circle" style={{ originY: "0px" }} />
+              )}
             </Link>
           </Item>
         </Items>

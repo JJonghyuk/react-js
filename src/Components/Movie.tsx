@@ -5,13 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import useWindowWidth from "../useWindowWidth";
 import { makeImagePath } from "../utils";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import MovieInfo from "./MovieInfo";
 
 const Slider = styled(motion.div)`
   position: relative;
   top: -100px;
-  height: 260px;
+  min-height: 300px;
 `;
 
 const SliderTitle = styled.h2`
@@ -28,11 +28,10 @@ const SlideButton = styled(motion.button)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  margin-top: 30px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(24, 24, 24, 0.7);
   &.leftBtn {
     left: 0;
   }
@@ -61,7 +60,7 @@ const MovieItem = styled(motion.button).withConfig({
   border-radius: 5px;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
-  background-position: center center;
+  transform-origin: center center;
   &:first-child {
     transform-origin: center left;
   }
@@ -80,7 +79,7 @@ const Info = styled(motion.span)`
   background-color: ${(props) => props.theme.black.lighter};
   span {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
   }
 `;
@@ -100,7 +99,6 @@ const MovieItemVariants: Variants = {
   },
   active: {
     scale: 1.3,
-    y: -50,
     transition: {
       delay: 0.5,
       duration: 0.2,
@@ -133,6 +131,7 @@ function Movie({ id, type, category, title }: MovieProps) {
     queryKey: [id, category],
     queryFn: () => getMovies({ type, category }),
   });
+  console.log(data);
 
   // // 슬라이드 버튼
   const [index, setIndex] = useState(0);
@@ -174,9 +173,14 @@ function Movie({ id, type, category, title }: MovieProps) {
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
   const onMovieItemClicked = (movieId: number) => {
-    history.push(`/movies/${movieId}`);
+    history.push(`/${type}/${category}/${movieId}`);
   };
-
+  const bigMovieMatch = useRouteMatch<{ movieId: string }>(
+    `/${type}/${category}/:movieId`,
+  );
+  const isMyMovieClicked = data?.results.some(
+    (movie) => String(movie.id) === bigMovieMatch?.params.movieId,
+  );
   return (
     <>
       <Slider whileHover="hover" initial="hidden">
@@ -200,8 +204,8 @@ function Movie({ id, type, category, title }: MovieProps) {
               .slice(offset * index, offset * index + offset)
               .map((movie) => (
                 <MovieItem
-                  layoutId={movie.id + id}
-                  key={movie.id + id}
+                  layoutId={`move-${id}-${movie.id}`}
+                  key={`move-${id}-${movie.id}`}
                   bgPhoto={makeImagePath(
                     movie.backdrop_path || movie.poster_path,
                     "w500",
@@ -233,7 +237,7 @@ function Movie({ id, type, category, title }: MovieProps) {
             height="32px"
             viewBox="0 -960 960 960"
             width="32px"
-            fill="#e3e3e3"
+            fill="#fff"
           >
             <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
           </svg>
@@ -250,13 +254,15 @@ function Movie({ id, type, category, title }: MovieProps) {
             height="32px"
             viewBox="0 -960 960 960"
             width="32px"
-            fill="#e3e3e3"
+            fill="#fff"
           >
             <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
           </svg>
         </SlideButton>
       </Slider>
-      <MovieInfo type={type} category={category} />
+      {isMyMovieClicked && (
+        <MovieInfo id={id} type={type} category={category} />
+      )}
     </>
   );
 }
