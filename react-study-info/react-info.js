@@ -1503,3 +1503,29 @@
 // https://developers.themoviedb.org/3/search/search-tv-shows
 
 // ----------------------------- //#9 Nomflix Clone -----------------------------
+
+// ----------------------------- ✅ useState vs Recoil 차이점 -----------------------------
+
+// Hook	기능	읽기	쓰기
+// useRecoilState	상태 읽고 쓰기	✅	✅
+// useRecoilValue	상태 읽기 전용	✅	❌
+// useSetRecoilState	상태 쓰기 전용	❌	✅
+// useResetRecoilState	상태 초기화	❌	✅
+
+// ✅ useState vs Recoil
+// 구분	- useState	|  Recoil (useRecoilState, useSetRecoilState, useRecoilValue)
+// 상태 - 저장 위치	컴포넌트 내부 (로컬 상태)	| 앱 전체에서 공유 가능한 전역 상태
+// 상태 - 공유	직접 props로 하위 컴포넌트에 전달해야 함	|  여러 컴포넌트가 atom에 직접 접근 가능
+// 리렌더링 범위 -	해당 컴포넌트만 리렌더링	|  상태를 사용하는 모든 컴포넌트가 리렌더링됨
+// 데이터 - 흐름	단방향(props drilling)	|  구독 기반 (필요한 컴포넌트만 접근)
+
+// 🎯 useState 와의 차이점 요약
+// 항목	- useState  |  Recoil (atom, selector)
+// 상태 공유 - 컴포넌트 내부	 |  여러 컴포넌트 간 공유 가능
+// 글로벌 관리 - ❌ 불가능	|  ✅ 가능
+// 리렌더 트리거 - 상태 변경 시 해당 컴포넌트만	|  상태 사용 중인 컴포넌트 모두
+// key 필요 여부 - ❌ 없음	|  ✅ 반드시 필요 (고유해야 함)
+
+// ----------------------------- #10  -----------------------------
+
+// ----------------------------- //#10  -----------------------------

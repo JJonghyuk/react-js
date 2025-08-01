@@ -1,14 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMovies, IGetMoviesResult } from "../api";
 import styled from "styled-components";
-import { makeImagePath } from "../utils";
-import { motion, AnimatePresence, Variants, useScroll } from "motion/react";
-import { useState } from "react";
-import useWindowWidth from "../useWindowWidth";
-import { useHistory, useRouteMatch } from "react-router-dom";
 import Banner from "../Components/Banner";
 import Movie from "../Components/Movie";
-import MovieInfo from "../Components/MovieInfo";
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -16,10 +10,13 @@ const Wrapper = styled.div`
 `;
 
 const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
 `;
 
 function Home() {

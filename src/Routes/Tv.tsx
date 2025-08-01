@@ -10,10 +10,13 @@ const Wrapper = styled.div`
 `;
 
 const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
 `;
 
 function Tv() {

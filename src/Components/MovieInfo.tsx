@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, useScroll } from "motion/react";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { makeImagePath } from "../utils";
 
 const Overlay = styled(motion.div)`
@@ -140,6 +140,8 @@ interface MovieProps {
 
 function MovieInfo({ id, type, category }: MovieProps) {
   const history = useHistory();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const { data } = useQuery<IGetMoviesResult>({
     queryKey: [id, category],
     queryFn: () => getMovies({ type, category }),
@@ -152,13 +154,9 @@ function MovieInfo({ id, type, category }: MovieProps) {
     data?.results.find(
       (movie) => String(movie.id) === bigMovieMatch.params.movieId,
     );
-
+  console.log(clickedMovie);
   const movieInfoClose = () => {
-    if (type === "movie") {
-      history.push("/");
-    } else if (type === "tv") {
-      history.push("/tv");
-    }
+    history.goBack();
   };
 
   return (
@@ -185,7 +183,11 @@ function MovieInfo({ id, type, category }: MovieProps) {
                         src={makeImagePath(clickedMovie.poster_path)}
                       />
                     </BigContImgBox>
-                    <BigTitle>{clickedMovie.title}</BigTitle>
+                    <BigTitle>
+                      {type === "movie"
+                        ? clickedMovie.title
+                        : clickedMovie.name}
+                    </BigTitle>
                     <ReleaseDate>{clickedMovie.release_date}</ReleaseDate>
                     <Rating>{clickedMovie.vote_average}</Rating>
                     <BigOverview>{clickedMovie.overview}</BigOverview>

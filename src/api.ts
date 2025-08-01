@@ -5,7 +5,9 @@ interface IMovie {
   id: number;
   backdrop_path: string;
   poster_path: string;
+  media_type: string;
   title: string;
+  name: string;
   overview: string;
   release_date: string;
   vote_average: number;
@@ -31,6 +33,12 @@ export function getMovies({ type, category }: MovieProps) {
   return fetch(`${BASE_PATH}/${type}/${category}?api_key=${API_KEY}`).then(
     (response) => response.json(),
   );
+}
+
+export function getSearch(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/multi?query=${keyword}&api_key=${API_KEY}`,
+  ).then((response) => response.json());
 }
 
 // * 이미지 불러오기

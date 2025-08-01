@@ -3,6 +3,7 @@ import { motion, useAnimation, useScroll } from "motion/react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Nav = styled(motion.nav)`
   z-index: 100;
@@ -144,10 +145,13 @@ function Header() {
     });
   }, [scrollY, navAnimation]);
   const history = useHistory();
+  const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = (data: IForm) => {
+    queryClient.removeQueries({ queryKey: ["search", "searchMovie"] });
     history.push(`/search?keyword=${data.keyword}`);
   };
+
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
@@ -203,7 +207,12 @@ function Header() {
             </svg>
           </Search>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
+            {...register("keyword", {
+              required: true,
+              minLength: { value: 2, message: "2글자 이상을 입력해주세요." },
+              validate: (value) =>
+                value.trim().length >= 2 || "공백만 입력할 수 없습니다.",
+            })}
             type="text"
             animate={inputAnimation}
             initial={{ scaleX: 0 }}

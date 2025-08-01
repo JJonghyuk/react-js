@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import useWindowWidth from "../useWindowWidth";
 import { makeImagePath } from "../utils";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import MovieInfo from "./MovieInfo";
 
 const Slider = styled(motion.div)`
@@ -60,7 +60,7 @@ const MovieItem = styled(motion.button).withConfig({
   border-radius: 5px;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
-  transform-origin: center center;
+  background-position: center;
   &:first-child {
     transform-origin: center left;
   }
@@ -72,10 +72,11 @@ const MovieItem = styled(motion.button).withConfig({
 const Info = styled(motion.span)`
   opacity: 0;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   display: block;
   padding: 10px;
   width: 100%;
+  border-radius: 0 0 5px 5px;
   background-color: ${(props) => props.theme.black.lighter};
   span {
     display: block;
@@ -100,7 +101,7 @@ const MovieItemVariants: Variants = {
   active: {
     scale: 1.3,
     transition: {
-      delay: 0.5,
+      delay: 0.4,
       duration: 0.2,
       type: "tween",
     },
@@ -131,8 +132,7 @@ function Movie({ id, type, category, title }: MovieProps) {
     queryKey: [id, category],
     queryFn: () => getMovies({ type, category }),
   });
-  console.log(data);
-
+  console.log(data?.results);
   // // 슬라이드 버튼
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -178,7 +178,7 @@ function Movie({ id, type, category, title }: MovieProps) {
   const bigMovieMatch = useRouteMatch<{ movieId: string }>(
     `/${type}/${category}/:movieId`,
   );
-  const isMyMovieClicked = data?.results.some(
+  const movieClicked = data?.results.some(
     (movie) => String(movie.id) === bigMovieMatch?.params.movieId,
   );
   return (
@@ -219,7 +219,11 @@ function Movie({ id, type, category, title }: MovieProps) {
                   type="button"
                 >
                   <Info variants={infoVariants}>
-                    <span>{movie.title}</span>
+                    {type === "movie" ? (
+                      <span>{movie.title}</span>
+                    ) : (
+                      <span>{movie.name}</span>
+                    )}
                   </Info>
                 </MovieItem>
               ))}
@@ -260,9 +264,7 @@ function Movie({ id, type, category, title }: MovieProps) {
           </svg>
         </SlideButton>
       </Slider>
-      {isMyMovieClicked && (
-        <MovieInfo id={id} type={type} category={category} />
-      )}
+      {movieClicked && <MovieInfo id={id} type={type} category={category} />}
     </>
   );
 }

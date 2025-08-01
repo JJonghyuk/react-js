@@ -49,7 +49,9 @@ function Banner({ id, type, category }: BannerProps) {
   return (
     <>
       <BannerItem bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
-        <Title>{data?.results[0].title}</Title>
+        <Title>
+          {type === "movie" ? data?.results[0].title : data?.results[0].name}
+        </Title>
         <Overview>{data?.results[0].overview}</Overview>
       </BannerItem>
     </>
