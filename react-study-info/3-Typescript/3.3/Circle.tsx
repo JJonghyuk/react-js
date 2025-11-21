@@ -19,6 +19,12 @@ interface CircleProps {
   text?: string;
 }
 
+// # 3.3
+// ? --> 붙일 시에는 필 조건이 아닌, 선택권(optional)(있을 수도, 없을 수도 있음)으로 변경되어짐
+// ex) --> borderColor:? string;
+// default값을 줄때는 text = "default text" 라고 -> ="" 라고 선언 해주면 된다 (es6구문)
+// ex) { bgColor, borderColor, text="default text" }
+
 function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
   return (
     <Container bg_Color={bgColor} border_Color={borderColor ?? bgColor}>
